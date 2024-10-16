@@ -6,7 +6,7 @@ import Header from './components/Header';
 import SubHeader from './components/SubHeader';
 import UploadInterface from './components/UploadInterface';
 
-
+import NoticeContainer from './components/NoticeContainer';
 
 
 
@@ -16,7 +16,7 @@ function App() {
 
 
   const navigate = useNavigate();
-  const navigateToNewPage = () => navigate('/chooseCategory');
+  const navigateToChooseCategory = () => navigate('/chooseCategory');
 
   const [file, setFile] = useState<File | null>(null);
 
@@ -57,7 +57,7 @@ function App() {
        
 
       <div className="container">
-          <div className="left-panel">
+          <div className="left_panel">
 
 
             <div className="left-header">
@@ -69,15 +69,16 @@ function App() {
 
 
           <div className="right-panel">
-            <div className="notice-container">
+            {/* <div className="notice-container">
               <div className="notice">
-                {/* <h3>Important Notice</h3> */}
+                
                 <p>We process only the first 10 pages of files up to 10MB in size, and all data is cleared upon page refresh in Sandbox. For details on our no-storage policy, please refer to AnyParser's privacy policy.</p>
               </div>
               <div className="notice-button"> 
                 <button className="full-access-button">FULL ACCESS</button>
               </div>
-            </div>
+            </div> */}
+            <NoticeContainer />
 
             <h1 className="header-text">Parse Documents</h1>
 
@@ -87,7 +88,7 @@ function App() {
             </div>
             <h1 className="header-text">Or Start with Samples</h1>
             <div className="sample-container">
-              <button className="sample-button" onClick={navigateToNewPage}>Sample 1</button>
+              <button className="sample-button" onClick={navigateToChooseCategory}>Sample 1</button>
               <button className="sample-button">Sample 2</button>
               <button className="sample-button">Sample 3</button> 
             </div>

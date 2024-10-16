@@ -1,0 +1,33 @@
+.ExtractKeyValue_checkbox_list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;  
+      margin-left: 30px;
+      font-size: 15px;
+
+      
+}     
+.ExtractKeyValue_extract_button  {     
+      margin: 20px;
+       
+      padding: 10px 20px;
+      border: 1px solid rgb(162, 161, 161);
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      background-color: orange;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;  
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+
+.ExtractKeyValue_extract_button:hover {
+      background-color: #ff8000;
+    }
+
+.ExtractKeyValue_header {
+      margin-left: 30px;
+      font-size: 20px;
+      font-weight: bold;
+}

@@ -1,0 +1,32 @@
+.notice-container {
+      display: flex;  
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: pink;
+      padding: 3px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.full-access-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      padding: 5px;
+      border-radius: 10px;
+      background-color: orange;
+       
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      
+  
+      transition: background-color 0.3s ease;
+
+}
+.full-access-button:hover {
+      background-color: #ff8000;
+    }

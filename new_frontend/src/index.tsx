@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ChooseCategory from './ChooseCategory';
-
+import DocumentParsing from './DucumentParsing';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -15,6 +15,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/chooseCategory" element={<ChooseCategory />} />
+        <Route path="/documentParsing" element={<DocumentParsing />} />
       </Routes>
     </Router>
   </React.StrictMode>

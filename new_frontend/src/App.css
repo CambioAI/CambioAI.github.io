@@ -81,21 +81,9 @@
   font-size: small;
 }
 
-button {
-  background-color: orange;
-  border-radius: 10px;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  font-size: small;
-  font-weight: bold;
-  color: white;
-  margin-left: 10px;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
-}
+ 
 
-button:hover {
+.sample-button:hover {
   background-color: #ff8000;
 }
 
@@ -176,13 +164,31 @@ button:hover {
 
 .sample-button {
   background-color: orange;
-  border-radius: 10px;
+ 
   padding: 10px;
   border: none;
-  cursor: pointer;
+ 
   
-  font-weight: bold;
   color: white;
   height: 200px;
   width: 200px;
+  
+  border-radius: 10px;
+  padding: 10px;
+ 
+  cursor: pointer;
+  font-size: small;
+  font-weight: bold;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.left_panel {
+  width: 40%;
+}
+.right_panel {
+  width: 60%;
+  
 }

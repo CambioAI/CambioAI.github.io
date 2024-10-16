@@ -1,14 +1,19 @@
 import React from 'react';
 import './SubHeader.css';
-
+import { useNavigate } from 'react-router-dom';
 
 type HeaderProps = {
     title: string; 
 };
 
 const SubHeader: React.FC<HeaderProps> = ({ title }) => {
+
+    const navigate = useNavigate();
+    const navigateToChooseCategory = () => navigate('/');
+
+    
     return (
-        <header className="sub_header">
+        <header className="sub_header" onClick={navigateToChooseCategory}>
             <h1>{title}</h1>
             {/* <nav>
                 <ul>

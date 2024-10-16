@@ -1,0 +1,17 @@
+.DocumentParsing_left_panel {
+      width: 40%;
+      height: 100%;
+      margin-left: 20px;
+      margin-right: 20px;     
+      margin-top: 20px;
+      margin-bottom: 20px;
+}
+.DocumentParsing_right_panel {
+      width: 60%;
+      height: 100%;
+      margin-left: 20px;
+      margin-right: 20px;     
+      margin-top: 20px;
+      margin-bottom: 20px;
+}
+ 
