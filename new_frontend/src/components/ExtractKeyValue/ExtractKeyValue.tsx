@@ -13,7 +13,7 @@ interface ExtractKeyValueProps {
 }
 
 
-      const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChange }) => {
+const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChange }) => {
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -58,7 +58,10 @@ interface ExtractKeyValueProps {
             </div>
             <div className="divider" onMouseDown={startResize}></div>
             <div className="ExtractKeyValue_right_panel" style={{ width: `${100 - leftWidth}%` }}>
-                   <ExtractKeyValueRightPanel   />
+                  <div className="ExtractKeyValue_right_panel_upper">
+                        <ExtractKeyValueRightPanel  />
+                  </div>
+                  
                    
                   <div className="ExtractKeyValue_upload_interface">
                         <UploadInterface   onChange={handleFileChange}  />

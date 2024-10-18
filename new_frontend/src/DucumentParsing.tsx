@@ -67,10 +67,10 @@ const DocumentParsing: React.FC = () => {
 
 
   return (
-    <div className="ChooseCategory">
+    <div className="DocumentParsing">
       <Header title="AnyParser" />
       <SubHeader title="Sandbox" />
-      <div className="container">
+      <div className="DocumentParsing_container">
         <div className="DocumentParsing_left_panel">
           <div className="left-header">
             <h2>File Outlook</h2>
@@ -79,7 +79,10 @@ const DocumentParsing: React.FC = () => {
           {renderPreview()}
         </div>
         <div className="DocumentParsing_right_panel">
-          <NoticeContainer />
+          <div className="DocumentParsing_FULL">
+            <NoticeContainer />
+          </div>
+          
             
 
 
@@ -87,8 +90,8 @@ const DocumentParsing: React.FC = () => {
 
 
 
-
-          <div className="category-buttons">
+     
+          <div className="DocumentParsing_category-buttons">
             <button onClick={() => setActiveCategory('full')} className={activeCategory === 'full' ? 'active' : ''}>
               Extract Full Content
             </button>
@@ -99,7 +102,7 @@ const DocumentParsing: React.FC = () => {
               Extract Key-Value Pairs Beta
             </button>
           </div>
-          <div className="category-content">
+          <div className="DocumentParsing_category-content">
           <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} />
           <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} />  
             {renderCategoryContent()}

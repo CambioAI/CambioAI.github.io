@@ -26,8 +26,38 @@
       background-color: #ff8000;
     }
 
-.ExtractKeyValue_header {
+.ExtractKeyValueRightPanel_header {
       margin-left: 30px;
-      font-size: 20px;
+      font-size: 17px;
       font-weight: bold;
 }
+
+.ExtractKeyValue_expanding_input_container {
+      height: 190px; /* Fixed height */
+      max-height: 190px; /* Ensures the container does not grow */
+      overflow-y: auto; /* Enables vertical scrolling */
+      padding: 20px;
+      /* border: 1px solid #00f110; */
+      margin-bottom: 20px; /* Ensures space between the container and the image */
+      margin-top: 0px;
+  }
+  
+  .ExtractKeyValue_input_group {
+      margin-bottom: 10px; /* Space between each group of inputs */
+  }
+
+.ExtractKeyValueRightPanel_input {
+      border: 1px solid #000000;
+      border-radius: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin-bottom: 2px;
+      font-size: 15px;
+      width: 70%;
+}
+
+
+
+

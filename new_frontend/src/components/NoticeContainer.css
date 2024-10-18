@@ -3,19 +3,20 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      background-color: pink;
-      padding: 3px;
-      border-radius: 10px;
+      background-color: rgb(255, 220, 203);
+       
+      border-radius: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
 }
 .full-access-button {
       display: flex;
       justify-content: center;
       align-items: center;
       
-      padding: 5px;
+      padding: 15px;
       border-radius: 10px;
-      background-color: orange;
+      background-color: rgb(255, 89, 0);
        
       color: white;
       font-size: 15px;
@@ -30,3 +31,13 @@
 .full-access-button:hover {
       background-color: #ff8000;
     }
+.notice{
+      display: flex;
+      flex-direction: row;
+     
+      font-size: 17px;
+      width: 70%;
+       
+      
+       
+}

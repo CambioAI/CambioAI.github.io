@@ -7,6 +7,7 @@ import SubHeader from './components/SubHeader';
 import UploadInterface from './components/UploadInterface';
 
 import NoticeContainer from './components/NoticeContainer';
+import LoginPage from './components/LoginPage';
 
 
 
@@ -14,7 +15,7 @@ import NoticeContainer from './components/NoticeContainer';
 
 function App() {
 
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const navigateToChooseCategory = () => navigate('/chooseCategory');
 
@@ -54,21 +55,28 @@ function App() {
       <div>
         <SubHeader title="Sandbox" />
       </div>
+
+    {isLoggedIn ? ( 
+      <LoginPage setIsLoggedIn={setIsLoggedIn} />
+    ) : (  
        
 
-      <div className="container">
-          <div className="left_panel">
+       
+
+      <div className="Mainpage_container">
+          <div className="Mainpage_left_panel">
 
 
             <div className="left-header">
               <h2>File Outlook</h2>
             </div>
+            
             {renderPreview()}
           </div>
 
 
 
-          <div className="right-panel">
+          <div className="Mainpage_right_panel">
             {/* <div className="notice-container">
               <div className="notice">
                 
@@ -87,12 +95,30 @@ function App() {
               <UploadInterface onChange={handleFileChange} />
             </div>
             <h1 className="header-text">Or Start with Samples</h1>
-            <div className="sample-container">
-              <button className="sample-button" onClick={navigateToChooseCategory}>Sample 1</button>
-              <button className="sample-button">Sample 2</button>
-              <button className="sample-button">Sample 3</button> 
+            <div className="Mainpage_sample-container">
+              <div className="ChooseCategory-buttons"> 
+                <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
+                  <img src="testFileLogo.png"  className="Mainpage_sample-button-image"/>
+                  <h2 className="Mainpage_sample-button-title">Financial Statements</ h2>
+                  <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text Multi-layer Tables | Personal ID Info Header & Footers</p>
+                </button>
+                <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
+                  <img src="testFileLogo.png"  className="Mainpage_sample-button-image"/>
+                  <h2 className="Mainpage_sample-button-title">Sustainability Report</ h2>
+                  <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text 
+                  Tables | Info Graphic | Plots</p>
+                </button>
+                <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
+                  <img src="testFileLogo.png"  className="Mainpage_sample-button-image"/>
+                  <h2 className="Mainpage_sample-button-title">Table of Contents</ h2>
+                  <p className="Mainpage_sample-button-description">Structured | Irregular Layout | Text 
+                  Multi-layer list
+                  
+                  
+                  </p>
+                </button> 
+              </div>
             </div>
-
 
 
 
@@ -106,11 +132,16 @@ function App() {
 
 
           </div>
+          {/* <div className="footer"></div> */}
       </div>
+      
+    )} 
 
-
-    </div>
+    <div className="footer"></div>
+    </div >
+ 
+          
   );
-}
 
+}
 export default App;

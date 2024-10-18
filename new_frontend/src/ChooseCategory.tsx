@@ -45,46 +45,47 @@ const ChooseCategory: React.FC = () => {
     <div className="ChooseCategory">
       <Header title="AnyParser" />
       <SubHeader title="Sandbox" />
-      <div className="container">
+      <div className="ChooseCategory_container">
         <div className="ChooseCategory_left_panel">
           <div className="left-header">
             <h2>File Outlook</h2>
           </div>
            
-          {renderPreview()}
+          {renderPreview()} 
         </div>
         <div className="ChooseCategory_right_panel">
-          <NoticeContainer />
+          <NoticeContainer  />
           <div className="right-header" >
             <h1>Parse Documents</h1>
-            <p className="category_description">Choose a category to view tailored instructions.</p>
-            <p className="category_description">Editing options will be available for all categories once your tasks is set up.</p>  
+            <p className="ChooseCategory_description">Choose a category to view tailored instructions.</p>
+            <p className="ChooseCategory_description">Editing options will be available for all categories once your tasks is set up.</p>  
           </div>
 
-          <div className="category-buttons"> 
-            <button className="category-button" onClick={navigateToDocumentParsing}>
-              <img src="testingLogo.png" />
-              <h2>Extract Full Content</ h2>
-              <p>Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+          <div className="ChooseCategory-buttons"> 
+            <button className="ChooseCategory-button" onClick={navigateToDocumentParsing}>
+              <img src="testingLogo.png"  className="ChooseCategory-button-image"/>
+              <h2 className="ChooseCategory-button-title">Extract Full Content</ h2>
+              <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
             </button>
 
-            <button className="category-button">
-              <img src="testingLogo.png" />
-              <h2>Extract Tables Only</ h2>
-              <p>Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+            <button className="ChooseCategory-button">
+              <img src="testingLogo.png" className="ChooseCategory-button-image" />
+              <h2 className="ChooseCategory-button-title">Extract Tables Only</ h2>
+              <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
 
             </button>
 
-            <button className="category-button">
-              <img src="testingLogo.png" />
-              <h2>Extract Key-Value Pairs</ h2>
-              <p>Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+            <button className="ChooseCategory-button">
+              <img src="testingLogo.png" className="ChooseCategory-button-image"/>
+              <h2 className="ChooseCategory-button-title">Extract Key-Value Pairs</ h2>
+              <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
 
 
 
 
             </button>
-            
+
+             
           </div>
 
         </div>
