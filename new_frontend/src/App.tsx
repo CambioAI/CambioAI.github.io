@@ -9,13 +9,25 @@ import LogoutButton from './components/LogoutButton';
 import NoticeContainer from './components/NoticeContainer';
 import LoginButton from './components/LoginButton';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+// import Tour from 'reactour';
+import TourComponent from './components/TourComponent';
+
+
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
 const redirectUri = window.location.origin;
 
-
- 
+const steps = [
+  {
+    content: 'Let’s start with parsing a sample doc!',
+    selector: '#start-button',
+    position: { top: 550, left: 930 },
+   
+  },
+   
+];
+  
 
 
 const App: React.FC = () => {
@@ -42,6 +54,15 @@ const App: React.FC = () => {
     } else if (file.type.startsWith('image')) {
         return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
     }
+  };
+  const [isTourOpen, setIsTourOpen] = useState(false);
+
+  const startTour = () => {
+    setIsTourOpen(true);
+  };
+
+  const closeTour = () => {
+    setIsTourOpen(false);
   };
 
 
@@ -144,11 +165,13 @@ const App: React.FC = () => {
 
 
 
-
+            <TourComponent steps={steps} isTourOpen={isTourOpen} closeTour={closeTour} />
             <div className="ProductTour">
               <p>Take a Product Tour?</p>
-              <button className="product-tour-button">Let's Go!</button>  
+              <button onClick={startTour} className="product-tour-go-button">Let's Go!</button>  
+              <button onClick={closeTour} className="product-tour-dismiss-button">Dismiss</button> 
             </div>
+             
              
           
 
@@ -161,6 +184,7 @@ const App: React.FC = () => {
             </div>
           )}
         */}
+        
       </div>
       
               

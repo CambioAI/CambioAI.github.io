@@ -10,6 +10,8 @@ import ExtractKeyValueRightPanel from './ExtractKeyValueRightPanel';
 interface ExtractKeyValueProps {
       isActive: boolean;
       onFileChange: (file: File) => void; 
+    
+      
 }
 
 

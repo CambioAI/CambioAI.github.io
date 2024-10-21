@@ -4,7 +4,7 @@ import './ExtractTables.css';
 import UploadInterface from '../UploadInterface';
 import ExtractTablesRightPanel_1 from './ExtractTablesRightPanel_1';
 import ExtractTablesRightPanel_2 from './ExtractTablesRightPanel_2';
-
+// import axios from 'axios';
 
 
 

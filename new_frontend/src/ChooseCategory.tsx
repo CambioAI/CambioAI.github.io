@@ -7,7 +7,7 @@ import SubHeader from './components/SubHeader';
 import UploadInterface from './components/UploadInterface';
 import NoticeContainer from './components/NoticeContainer';
 import './ChooseCategory.css';
-
+import TourComponent from './components/TourComponent';
 
 
 const ChooseCategory: React.FC = () => {
@@ -28,6 +28,17 @@ const ChooseCategory: React.FC = () => {
         setFile(event.target.files[0]);
     }
   };
+
+  const steps = [
+    {
+      content: 'The original documents will be shown here.',
+      selector: '#start-button',
+      position: { top: 550, left: 930 },
+     
+    },
+     
+  ];
+    
   
   
   const renderPreview = () => {

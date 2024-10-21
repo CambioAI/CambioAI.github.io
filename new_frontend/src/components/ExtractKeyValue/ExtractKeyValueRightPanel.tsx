@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import './ExtractKeyValueRightPanel.css';
+import { useFileContext } from '../FileContext';
 
 import UploadInterface from '../UploadInterface';
 
+ 
 
 // const ExtractKeyValueRightPanel: React.FC<{ onButtonClick: () => void }> = ({ onButtonClick }) => {
-const ExtractKeyValueRightPanel = () => {
+const ExtractKeyValueRightPanel = (   ) => {
       type InputPair = {
             key: string;
             optional: string;
             expanded: boolean;
       };
-
+      const { sendFileToServer } = useFileContext();
 
 
        const [inputPairs, setInputPairs] = useState<InputPair[]>([{ key: '', optional: '', expanded: false }]);
@@ -43,7 +45,7 @@ const ExtractKeyValueRightPanel = () => {
       <div>
             
             {/* <button className="ExtractKeyValue_extract_button" onClick={onButtonClick}>Extract Full Content</button> */}
-            <button className="ExtractKeyValue_extract_button">Extract Key-Value</button>
+            <button className="ExtractKeyValue_extract_button" onClick={sendFileToServer}>Extract Key-Value</button>
             <h2 className="ExtractKeyValueRightPanel_header">Leave-out Info</h2>
             <li className="ExtractKeyValue_checkbox_list">
                 <label>
