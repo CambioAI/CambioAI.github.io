@@ -8,13 +8,19 @@
       
 }     
 .ExtractKeyValue_extract_button  {     
-      margin: 20px;
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      width: 90%; 
        
-      padding: 10px 20px;
-      border: 1px solid rgb(162, 161, 161);
+      
+      border: 0px solid rgb(162, 161, 161);
       border-radius: 10px;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      background-color: orange;
+      /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+      background-color: #F24822;
       color: white;
       font-size: 15px;
       font-weight: bold;  

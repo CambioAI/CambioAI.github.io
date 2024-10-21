@@ -1,6 +1,6 @@
  
-import { useState  } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState   } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React from 'react';
 import Header from './components/Header';
 import SubHeader from './components/SubHeader';
@@ -9,7 +9,7 @@ import NoticeContainer from './components/NoticeContainer';
 import './DocumentParsing.css';
 import ExtractFullContent from './components/ExtractFullContent/ExtractFullContent';
 import ExtractKeyValue from './components/ExtractKeyValue/ExtractKeyValue';
-
+import ExtractTables from './components/ExtractTables/ExtractTables';
 const DocumentParsing: React.FC = () => {
   // Assuming the URL of your default PDF
   const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";  
@@ -41,22 +41,23 @@ const DocumentParsing: React.FC = () => {
 
 
 
+    const location = useLocation();
+    const initialCategory = location.state?.category || 'full';
 
 
-
-    const [activeCategory, setActiveCategory] = useState<'full' | 'tables' | 'keyValue'>('full');
-    const renderCategoryContent = () => {
-      switch (activeCategory) {
-        // case 'full':
-        //   return <p>Full content parsing options and details will go here.</p>;
-        case 'tables':
-          return <p>Table extraction options and details will go here.</p>;
-          // case 'keyValue':
-          //   return <ExtractKeyValue />;
-        default:
-          return null;
-      }
-    };
+    const [activeCategory, setActiveCategory] = useState<'full' | 'tables' | 'keyValue'>(initialCategory);
+    // const renderCategoryContent = () => {
+    //   switch (activeCategory) {
+    //     // case 'full':
+    //     //   return <p>Full content parsing options and details will go here.</p>;
+    //     case 'tables':
+    //       return <p>Table extraction options and details will go here.</p>;
+    //       // case 'keyValue':
+    //       //   return <ExtractKeyValue />;
+    //     default:
+    //       return null;
+    //   }
+    // };
 
 
 
@@ -68,8 +69,8 @@ const DocumentParsing: React.FC = () => {
 
   return (
     <div className="DocumentParsing">
-      <Header title="AnyParser" />
-      <SubHeader title="Sandbox" />
+      <Header   />
+      <SubHeader   />
       <div className="DocumentParsing_container">
         <div className="DocumentParsing_left_panel">
           <div className="left-header">
@@ -90,7 +91,9 @@ const DocumentParsing: React.FC = () => {
 
 
 
-     
+          <div className="DocumentParsing_category_header ">
+            <h2>Parse Documents</h2>
+          </div>
           <div className="DocumentParsing_category-buttons">
             <button onClick={() => setActiveCategory('full')} className={activeCategory === 'full' ? 'active' : ''}>
               Extract Full Content
@@ -104,8 +107,9 @@ const DocumentParsing: React.FC = () => {
           </div>
           <div className="DocumentParsing_category-content">
           <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} />
+          <ExtractTables isActive={activeCategory === 'tables'} onFileChange={handleFileChange} />  
           <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} />  
-            {renderCategoryContent()}
+            {/* {renderCategoryContent()} */}
           </div>
 
 

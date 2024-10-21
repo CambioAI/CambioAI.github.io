@@ -1,21 +1,21 @@
 // ExtractFullContent.tsx
 import React, { useState, useRef } from 'react';
-import './ExtractFullContent.css';
+import './ExtractTables.css';
 import UploadInterface from '../UploadInterface';
-import ExtractFullContentRightPanel_1 from './ExtractFullContentRightPanel_1';
-import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
+import ExtractTablesRightPanel_1 from './ExtractTablesRightPanel_1';
+import ExtractTablesRightPanel_2 from './ExtractTablesRightPanel_2';
 
 
 
 
 
-interface ExtractFullContentProps {
+interface ExtractTablesProps {
       isActive: boolean;
       onFileChange: (file: File) => void; 
 }
 
 
-const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange }) => {
+const ExtractTables: React.FC<ExtractTablesProps> = ({ isActive, onFileChange }) => {
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -55,18 +55,18 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
     return (
          
       <div ref={containerRef} className="split-container">
-            <div className="ExtractFullContent_left_panel" style={{ width: `${leftWidth}%` }}>
+            <div className="ExtractTables_left_panel" style={{ width: `${leftWidth}%` }}>
                 Left Panel
             </div>
-            <div className="ExtractFullContent_divider" onMouseDown={startResize}></div>
-            <div className="ExtractFullContent_right_panel" style={{ width: `${100 - leftWidth}%` }}>
+            <div className="ExtractTables_divider" onMouseDown={startResize}></div>
+            <div className="ExtractTables_right_panel" style={{ width: `${100 - leftWidth}%` }}>
                    
                   {showPanel === 1 ? (
-                    <ExtractFullContentRightPanel_1 onButtonClick={togglePanel} />
+                    <ExtractTablesRightPanel_1 onButtonClick={togglePanel} />
                         ) : (
-                              <ExtractFullContentRightPanel_2 onButtonClick={togglePanel} />
+                              <ExtractTablesRightPanel_2 onButtonClick={togglePanel} />
                   )}
-                  <div className="ExtractFullContent_upload_interface">
+                  <div className="ExtractTables_upload_interface">
                         <UploadInterface   onChange={handleFileChange}  />
                   </div>
                   
@@ -81,4 +81,4 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
     );
 };
 
-export default ExtractFullContent;
+export default ExtractTables;

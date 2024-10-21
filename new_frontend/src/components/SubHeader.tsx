@@ -2,19 +2,17 @@ import React from 'react';
 import './SubHeader.css';
 import { useNavigate } from 'react-router-dom';
 
-type HeaderProps = {
-    title: string; 
-};
+ 
 
-const SubHeader: React.FC<HeaderProps> = ({ title }) => {
+const SubHeader: React.FC  = ( ) => {
 
     const navigate = useNavigate();
     const navigateToChooseCategory = () => navigate('/');
 
     
     return (
-        <header className="sub_header" onClick={navigateToChooseCategory}>
-            <h1>{title}</h1>
+        <header className="sub_header" >
+            <h1 className="sub_header_text" onClick={navigateToChooseCategory}>Sandbox</h1>
             {/* <nav>
                 <ul>
                     <li><a href="#home">Home</a></li>

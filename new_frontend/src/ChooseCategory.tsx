@@ -14,8 +14,9 @@ const ChooseCategory: React.FC = () => {
 
 
   const navigate = useNavigate();
-  const navigateToDocumentParsing = () => navigate('/documentParsing');
-
+  const navigateToDocumentParsing = (category: string) => {
+    navigate('/documentParsing', { state: { category  } });
+  };
 
   // Assuming the URL of your default PDF
   const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";  
@@ -43,8 +44,8 @@ const ChooseCategory: React.FC = () => {
     };
   return (
     <div className="ChooseCategory">
-      <Header title="AnyParser" />
-      <SubHeader title="Sandbox" />
+      <Header  />
+      <SubHeader  />
       <div className="ChooseCategory_container">
         <div className="ChooseCategory_left_panel">
           <div className="left-header">
@@ -56,27 +57,27 @@ const ChooseCategory: React.FC = () => {
         <div className="ChooseCategory_right_panel">
           <NoticeContainer  />
           <div className="right-header" >
-            <h1>Parse Documents</h1>
+            <h1 className="ChooseCategory_title">Parse Documents</h1>
             <p className="ChooseCategory_description">Choose a category to view tailored instructions.</p>
             <p className="ChooseCategory_description">Editing options will be available for all categories once your tasks is set up.</p>  
           </div>
 
           <div className="ChooseCategory-buttons"> 
-            <button className="ChooseCategory-button" onClick={navigateToDocumentParsing}>
-              <img src="testingLogo.png"  className="ChooseCategory-button-image"/>
+            <button className="ChooseCategory-button" onClick={() => navigateToDocumentParsing('full')}>
+              <img src=" \Sanbox Icon and images\Sanbox Icon and images\extract full content illustration.png"  className="ChooseCategory-button-image"/>
               <h2 className="ChooseCategory-button-title">Extract Full Content</ h2>
               <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
             </button>
 
-            <button className="ChooseCategory-button">
-              <img src="testingLogo.png" className="ChooseCategory-button-image" />
+            <button className="ChooseCategory-button" onClick={() => navigateToDocumentParsing('tables')}>
+              <img src=" \Sanbox Icon and images\Sanbox Icon and images\extract table illustration.png" className="ChooseCategory-button-image" />
               <h2 className="ChooseCategory-button-title">Extract Tables Only</ h2>
               <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
 
             </button>
 
-            <button className="ChooseCategory-button">
-              <img src="testingLogo.png" className="ChooseCategory-button-image"/>
+            <button className="ChooseCategory-button" onClick={() => navigateToDocumentParsing('keyValue')}>
+              <img src=" \Sanbox Icon and images\Sanbox Icon and images\Parse illustration.png" className="ChooseCategory-button-image"/>
               <h2 className="ChooseCategory-button-title">Extract Key-Value Pairs</ h2>
               <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
 

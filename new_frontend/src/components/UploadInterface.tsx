@@ -56,16 +56,15 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
       <input type="file" onChange={onChange} accept="image/jpeg, image/png, .pdf, .pptx, .ppt, .doc, .docx, .xlsx" style={{ display: 'none' }} id="file-input" />
       <label htmlFor="file-input" className="upload-button">
         <div className={(dragOver ? "upload-box dragover" : "upload-box")}>
-          <div className="header">
+          <img src='/Sanbox Icon and images/Sanbox Icon and images/Upload icons.png' className='UploadInterface_upload-icon' />
+          <h2 className='UploadInterface_description'>PDF, PNG, JPEG, JPG, PPT, and DOCX</h2>
+          <div className="UploadInterface_header">
             <h1>Upload</h1>
           </div>
-          <div className="icon-container">
-            <div className="icon pdf"><span>PDF</span></div>
-            <div className="icon ppt"><span>PPT</span></div>
-            <div className="icon word"><span>WORD</span></div>
-            <div className="icon image"><span>IMG</span></div>
+          <div className='UploadInterface_file-description'>
+            <p  >Click/Drag and drop file here or Just paste screenshot</p>
           </div>
-          <p>Click/Drag and drop file here or Just paste screenshot</p>
+
         </div>
       </label>
     </div>

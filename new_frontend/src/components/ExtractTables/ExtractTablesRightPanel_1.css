@@ -1,20 +1,20 @@
-.ExtractFullContentRightPanel_2_checkbox_list {
+.ExtractTablesRightPanel_1_checkbox_list {
       display: flex;
       flex-direction: column;
       gap: 15px;  
-      color: #F24822;
+      margin-left: 30px;
       font-size: 15px;
        
 
-
       
-}    
-.ExtractFullContentRightPanel_2_extract_button  {     
+}     
+.ExtractTablesRightPanel_1_extract_button  {     
       margin-left: 5%;
       margin-right: 5%;
       margin-top: 20px;
       margin-bottom: 20px;
       width: 90%;
+      align-items: center;
       padding-top: 15px;
       padding-bottom: 15px;
       border: 0px solid rgb(162, 161, 161);
@@ -28,26 +28,11 @@
       transition: background-color 0.3s ease;
 }
 
-.ExtractFullContentRightPanel_2_extract_button:hover {
+.ExtractTablesRightPanel_1_extract_button:hover {
       background-color: #ff8000;
     }
-
-.ExtractFullContentRightPanel_2_Dwld_icon {
+.ExtractTablesRightPanel_1_Dwld_icon {
       width: 15px;
       height: 15px;
       margin-right: 10px;
-}
-
-.ExtractFullContentRightPanel_2_redo_icon {
-      width: 15px;
-      height: 15px;
-      margin-right: 10px;
-      margin-left: 20px;
-}
-
-.ExtractFullContentRightPanel_2_copy_icon {
-      width: 15px;
-      height: 15px;
-      margin-right: 10px;
-      margin-left: 20px;
 }

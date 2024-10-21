@@ -1,28 +1,38 @@
-.notice-container {
+.NoticeContainer_container {
+      gap: 100px;
       display: flex;  
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      background-color: rgb(255, 220, 203);
+      background-color: #FFE9E4;
+      height: 66px;
        
-      border-radius: 20px;
+  
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 100%;
 }
 .full-access-button {
+      margin-right: 5%;
+      width: 13%;
       display: flex;
       justify-content: center;
       align-items: center;
       
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgb(255, 89, 0);
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: 1px solid #F24822;
+      background-color: #F24822;
        
       color: white;
-      font-size: 15px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       border: none;
+      font-family: Inter;
+ 
+      line-height: 20px;
+ 
+
       
   
       transition: background-color 0.3s ease;
@@ -31,13 +41,18 @@
 .full-access-button:hover {
       background-color: #ff8000;
     }
-.notice{
+.NoticeContainer_notice{
+      
       display: flex;
       flex-direction: row;
-     
-      font-size: 17px;
-      width: 70%;
+      font-size: 12px;
+      width: 83%;
+      font-weight: 400;
+      font-family: Inter;
+      line-height: 14.4px;
+      padding-left: 5%;
        
       
        
 }
+ 

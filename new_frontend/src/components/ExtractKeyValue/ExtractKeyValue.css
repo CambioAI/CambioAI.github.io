@@ -24,7 +24,8 @@
 .ExtractKeyValue_right_panel {
       display: flex;
       flex-direction: column;
-      border: 2px solid rgb(162, 161, 161);
+      justify-content: space-between;
+      padding-bottom: 15px;
       border-radius: 10px;
       margin: 10px;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -43,10 +44,11 @@
 
 .ExtractKeyValue_upload_interface {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      margin-left: 5%;
+      margin-right: 5%;
+      height: 40%;
        
-      min-height: 40vh;  
+     
 }
 
+ 

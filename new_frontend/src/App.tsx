@@ -5,17 +5,22 @@ import './App.css';
 import Header from './components/Header';
 import SubHeader from './components/SubHeader';
 import UploadInterface from './components/UploadInterface';
-
+import LogoutButton from './components/LogoutButton';
 import NoticeContainer from './components/NoticeContainer';
-import LoginPage from './components/LoginPage';
+import LoginButton from './components/LoginButton';
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
+const redirectUri = window.location.origin;
 
 
+ 
 
 
-
-function App() {
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const App: React.FC = () => {
+  const { isAuthenticated } = useAuth0();
+ 
   const navigate = useNavigate();
   const navigateToChooseCategory = () => navigate('/chooseCategory');
 
@@ -27,8 +32,10 @@ function App() {
     }
   };
   const renderPreview = () => {
-    if (!file) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
-
+    if (!file) return (<div className="Mainpage_no-file-selected-container">
+                        <img src="/Sanbox Icon and images/Sanbox Icon and images/file display place holder illustration.png"  className="Mainpage_no-file-selected"/>
+                        <p className="Mainpage_no-file-selected-text">Your uploaded file will be shown here :)</p>
+                        </div>);
     const fileUrl = URL.createObjectURL(file);
     if (file.type.startsWith('application/pdf')) {
         return <iframe src={fileUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;
@@ -42,23 +49,31 @@ function App() {
 
 
 
-
+  
 
 
 
   return (
+    // <Auth0Provider domain={domain} clientId={clientId} 
+    // authorizationParams={{ redirect_uri: window.location.origin }}
+    // >
+
+    
     <div className="App">
       <div>
-        <Header title="AnyParser" />
+        <Header />
       
       </div>
       <div>
-        <SubHeader title="Sandbox" />
+        <SubHeader />
+      </div>
+      <div>
+         
+        {/* <LoginButton  />
+        <LogoutButton   /> */}
       </div>
 
-    {isLoggedIn ? ( 
-      <LoginPage setIsLoggedIn={setIsLoggedIn} />
-    ) : (  
+    
        
 
        
@@ -75,49 +90,56 @@ function App() {
           </div>
 
 
-
+          {/* {isAuthenticated ? ( */}
           <div className="Mainpage_right_panel">
-            {/* <div className="notice-container">
-              <div className="notice">
-                
-                <p>We process only the first 10 pages of files up to 10MB in size, and all data is cleared upon page refresh in Sandbox. For details on our no-storage policy, please refer to AnyParser's privacy policy.</p>
-              </div>
-              <div className="notice-button"> 
-                <button className="full-access-button">FULL ACCESS</button>
-              </div>
-            </div> */}
-            <NoticeContainer />
+            <div className="Mainpage_Notice_container">
+              <NoticeContainer  />
+            </div>
+            
 
-            <h1 className="header-text">Parse Documents</h1>
+            <h1 className="Mainpage_header-text">Parse Documents</h1>
 
 
             <div className="upload-interface-container">
               <UploadInterface onChange={handleFileChange} />
             </div>
-            <h1 className="header-text">Or Start with Samples</h1>
+            <h1 className="Mainpage_header-text">Or Start with Samples</h1>
             <div className="Mainpage_sample-container">
-              <div className="ChooseCategory-buttons"> 
+               
                 <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
-                  <img src="testFileLogo.png"  className="Mainpage_sample-button-image"/>
-                  <h2 className="Mainpage_sample-button-title">Financial Statements</ h2>
-                  <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text Multi-layer Tables | Personal ID Info Header & Footers</p>
+                  <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 1.png"  className="Mainpage_sample-button-image"/>
+                  <div className="Mainpage_sample-button-content">
+                    <h2 className="Mainpage_sample-button-title">Financial Statements</ h2>
+                    <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text Multi-layer Tables | Personal ID Info Header & Footers</p>
+                  </div>
+                  
                 </button>
+
+
                 <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
-                  <img src="testFileLogo.png"  className="Mainpage_sample-button-image"/>
-                  <h2 className="Mainpage_sample-button-title">Sustainability Report</ h2>
-                  <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text 
-                  Tables | Info Graphic | Plots</p>
+                   
+                    <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 1.png"  className="Mainpage_sample-button-image"/>
+                    <div className="Mainpage_sample-button-content"> 
+                      <h2 className="Mainpage_sample-button-title">Sustainability Report</ h2>
+                      <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text 
+                      Tables | Info Graphic | Plots</p>
+                    </div>
+                  
                 </button>
+
+
                 <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
-                  <img src="testFileLogo.png"  className="Mainpage_sample-button-image"/>
-                  <h2 className="Mainpage_sample-button-title">Table of Contents</ h2>
-                  <p className="Mainpage_sample-button-description">Structured | Irregular Layout | Text 
-                  Multi-layer list
+                  <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 3.png"  className="Mainpage_sample-button-image"/>
+                  <div className="Mainpage_sample-button-content">
+                    <h2 className="Mainpage_sample-button-title">Table of Contents</ h2>
+                    <p className="Mainpage_sample-button-description">Structured | Irregular Layout | Text 
+                    Multi-layer list
                   
                   
                   </p>
+                  </div>
                 </button> 
-              </div>
+               
             </div>
 
 
@@ -128,18 +150,24 @@ function App() {
               <button className="product-tour-button">Let's Go!</button>  
             </div>
              
-            
+          
 
 
           </div>
-          {/* <div className="footer"></div> */}
+
+          {/* ) : (
+            <div  >
+              <LoginButton />
+            </div>
+          )}
+        */}
       </div>
       
-    )} 
+              
 
     <div className="footer"></div>
     </div >
- 
+    // </Auth0Provider>
           
   );
 
