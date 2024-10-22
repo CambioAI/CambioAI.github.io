@@ -51,4 +51,16 @@
      
 }
 
- 
+.ExtractKeyValue_api_response {
+      margin-left: 5%;
+      margin-right: 5%;
+      text-align: left;
+       
+      white-space: pre-wrap;  /* Wraps the text and preserves whitespace */
+      word-wrap: break-word;  /* Allows long words to be broken and wrapped to the next line */
+      overflow-wrap: break-word; /* Ensures that if any single word is too long, it breaks and wraps to the next line */
+  }
+.ExtractKeyValue_left_panel {
+      align-items: center;
+      text-align: center;
+}

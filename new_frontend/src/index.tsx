@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import ChooseCategory from './ChooseCategory';
 import DocumentParsing from './DucumentParsing';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { TourProvider } from './components/TourContext';
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
@@ -23,14 +24,17 @@ root.render(
     authorizationParams={{ redirect_uri: window.location.origin }}
      
     >
-   
+    
+    
     
     <Router>
+    <TourProvider>
         <Routes>
           <Route path="/" element={<App />} />
         <Route path="/chooseCategory" element={<ChooseCategory />} />
         <Route path="/documentParsing" element={<DocumentParsing />} />
       </Routes>
+      </TourProvider>
     </Router>
 </Auth0Provider>
 

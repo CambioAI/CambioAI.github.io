@@ -18,16 +18,18 @@ const DocumentParsing: React.FC = () => {
   const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";  
   
   const [file, setFile] = useState<File | null>(null);
-
+  const [apiResponse, setApiResponse] = useState(null);
   const handleFileChange = (file: File) => {
       setFile(file);
   };
+   
 
 
   const input_keys = ["name", "address", "phone", "email"]
-  const server_url = "http://35.87.83.173/extract"
+  const server_url_keyValues = "http://35.95.52.139:8000/extract"
+  const server_url_full = "http://35.95.52.139:8000/parse"
   const api_key = "Cambio2024!"
-  const sendFileToServer = async () => {
+  const ExtractKeyValuePostServer = async () => {
     if (!file) {
       alert('Please select a file first.');
       return;
@@ -55,8 +57,51 @@ const DocumentParsing: React.FC = () => {
         "Content-Type": "application/json"
       };
       console.log("started");
-      const response = await axios.post(server_url, payload, { headers });
+      const response = await axios.post(server_url_keyValues, payload, { headers });
       console.log(JSON.stringify(response.data, null, 2));
+      setApiResponse(response.data);
+      // Handle successful response (e.g., update state, show success message)
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      if (axios.isAxiosError(error) && error.response) {
+        alert(`Server error: ${error.response.status} - ${error.response.data.message || 'Unknown error'}`);
+      } else {
+        alert('An error occurred while uploading the file. Please try again.');
+      }
+    }
+  };
+
+  const ExtractFullContentPostServer = async () => {
+    if (!file) {
+      alert('Please select a file first.');
+      return;
+    }
+
+    // Check file size (e.g., limit to 10MB)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+    if (file.size > MAX_FILE_SIZE) {
+      alert(`File size exceeds the limit of ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
+      return;
+    }
+
+    try {
+      // Read and encode the file
+      const fileContent = await readFileAsBase64(file);
+
+      const payload = {
+        
+        file_content: fileContent,
+        file_name: file.name,
+      };
+
+      const headers = {
+        "X-API-Key": api_key,
+        "Content-Type": "application/json"
+      };
+      console.log("started");
+      const response = await axios.post(server_url_full, payload, { headers });
+      console.log(JSON.stringify(response.data, null, 2));
+      setApiResponse(response.data);
       // Handle successful response (e.g., update state, show success message)
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -168,16 +213,16 @@ const DocumentParsing: React.FC = () => {
             <button onClick={() => setActiveCategory('tables')} className={activeCategory === 'tables' ? 'active' : ''}>
               Extract Tables Only
             </button>
-            <button onClick={() => setActiveCategory('keyValue')} className={activeCategory === 'keyValue' ? 'active' : ''}>
+            <button onClick={() => setActiveCategory('keyValue')} className={activeCategory === 'keyValue' ? 'active' : ''} >
               Extract Key-Value Pairs Beta
             </button>
           </div>
           <div className="DocumentParsing_category-content">
-          <FileProvider sendFileToServer={sendFileToServer}>
+          <FileProvider ExtractKeyValue={ExtractKeyValuePostServer} ExtractFullContent={ExtractFullContentPostServer}>
        
-          <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} />
+          <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} apiResponse={apiResponse} />
           <ExtractTables isActive={activeCategory === 'tables'} onFileChange={handleFileChange} />  
-          <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange}   />  
+          <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} apiResponse={apiResponse} />  
             {/* {renderCategoryContent()} */}
 
           

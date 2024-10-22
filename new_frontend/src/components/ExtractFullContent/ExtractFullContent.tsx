@@ -4,7 +4,7 @@ import './ExtractFullContent.css';
 import UploadInterface from '../UploadInterface';
 import ExtractFullContentRightPanel_1 from './ExtractFullContentRightPanel_1';
 import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
-
+import { useFileContext } from '../FileContext';
 
 
 
@@ -12,10 +12,11 @@ import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
 interface ExtractFullContentProps {
       isActive: boolean;
       onFileChange: (file: File) => void; 
+      apiResponse: any;
 }
 
 
-const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange }) => {
+const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange, apiResponse  }) => {
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -56,7 +57,13 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
          
       <div ref={containerRef} className="split-container">
             <div className="ExtractFullContent_left_panel" style={{ width: `${leftWidth}%` }}>
-                Left Panel
+            {apiResponse && (
+                <div>
+                    <h2>  API Response:</h2>
+                    <pre className='ExtractFullContent_api_response'>{JSON.stringify(apiResponse, null, 2)}</pre>
+                </div>
+            )}
+               
             </div>
             <div className="ExtractFullContent_divider" onMouseDown={startResize}></div>
             <div className="ExtractFullContent_right_panel" style={{ width: `${100 - leftWidth}%` }}>

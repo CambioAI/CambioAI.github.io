@@ -13,7 +13,7 @@ const ExtractKeyValueRightPanel = (   ) => {
             optional: string;
             expanded: boolean;
       };
-      const { sendFileToServer } = useFileContext();
+        const { ExtractKeyValue } = useFileContext();
 
 
        const [inputPairs, setInputPairs] = useState<InputPair[]>([{ key: '', optional: '', expanded: false }]);
@@ -45,7 +45,7 @@ const ExtractKeyValueRightPanel = (   ) => {
       <div>
             
             {/* <button className="ExtractKeyValue_extract_button" onClick={onButtonClick}>Extract Full Content</button> */}
-            <button className="ExtractKeyValue_extract_button" onClick={sendFileToServer}>Extract Key-Value</button>
+            <button className="ExtractKeyValue_extract_button" onClick={ExtractKeyValue}>Extract Key-Value</button>
             <h2 className="ExtractKeyValueRightPanel_header">Leave-out Info</h2>
             <li className="ExtractKeyValue_checkbox_list">
                 <label>

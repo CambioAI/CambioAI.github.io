@@ -11,23 +11,14 @@ import LoginButton from './components/LoginButton';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 // import Tour from 'reactour';
 import TourComponent from './components/TourComponent';
-
+import { useTour } from './components/TourContext';
 
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
 const redirectUri = window.location.origin;
 
-const steps = [
-  {
-    content: 'Let’s start with parsing a sample doc!',
-    selector: '#start-button',
-    position: { top: 550, left: 930 },
-   
-  },
-   
-];
-  
+ 
 
 
 const App: React.FC = () => {
@@ -55,16 +46,19 @@ const App: React.FC = () => {
         return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
     }
   };
-  const [isTourOpen, setIsTourOpen] = useState(false);
+  const { showTour, setShowTour, currentStepIndex, setCurrentStepIndex } = useTour();
+  const steps = [
+    { position: { top: '550px', left: '930px' }, content: 'Let’s start with parsing a sample doc!' },
+    // { position: { top: '200px', left: '250px' }, content: 'You can upload your own document or use one of our samples.' },
+    // { position: { top: '300px', left: '350px' }, content: 'Click on a sample to get started!' },
+  ];
 
-  const startTour = () => {
-    setIsTourOpen(true);
+  const handleSampleClick = () => {
+    if (currentStepIndex === 1) {
+      setCurrentStepIndex(2); // Move to the next step, which will be in ChooseCategory
+    }
+    navigateToChooseCategory();
   };
-
-  const closeTour = () => {
-    setIsTourOpen(false);
-  };
-
 
 
 
@@ -127,7 +121,7 @@ const App: React.FC = () => {
             <h1 className="Mainpage_header-text">Or Start with Samples</h1>
             <div className="Mainpage_sample-container">
                
-                <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
+                <button className="Mainpage_sample-button" onClick={handleSampleClick}>
                   <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 1.png"  className="Mainpage_sample-button-image"/>
                   <div className="Mainpage_sample-button-content">
                     <h2 className="Mainpage_sample-button-title">Financial Statements</ h2>
@@ -137,7 +131,7 @@ const App: React.FC = () => {
                 </button>
 
 
-                <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
+                <button className="Mainpage_sample-button" onClick={handleSampleClick}>
                    
                     <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 1.png"  className="Mainpage_sample-button-image"/>
                     <div className="Mainpage_sample-button-content"> 
@@ -149,7 +143,7 @@ const App: React.FC = () => {
                 </button>
 
 
-                <button className="Mainpage_sample-button" onClick={navigateToChooseCategory}>
+                <button className="Mainpage_sample-button" onClick={handleSampleClick}>
                   <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 3.png"  className="Mainpage_sample-button-image"/>
                   <div className="Mainpage_sample-button-content">
                     <h2 className="Mainpage_sample-button-title">Table of Contents</ h2>
@@ -165,11 +159,13 @@ const App: React.FC = () => {
 
 
 
-            <TourComponent steps={steps} isTourOpen={isTourOpen} closeTour={closeTour} />
+            {showTour && currentStepIndex === 0 && (
+                <TourComponent steps={steps} onClose={() => setShowTour(false)} />
+            )}
             <div className="ProductTour">
               <p>Take a Product Tour?</p>
-              <button onClick={startTour} className="product-tour-go-button">Let's Go!</button>  
-              <button onClick={closeTour} className="product-tour-dismiss-button">Dismiss</button> 
+              <button className="product-tour-go-button" onClick={() => { setShowTour(true); setCurrentStepIndex(0); }}>Start Tour</button>
+              <button className="product-tour-dismiss-button" onClick={() => setShowTour(false)}>Dismiss Tour</button>
             </div>
              
              

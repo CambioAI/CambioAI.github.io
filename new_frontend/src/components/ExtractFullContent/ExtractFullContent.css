@@ -7,6 +7,8 @@
   .ExtractFullContent_left_panel {
       flex-grow: 1; /* Allows panels to grow and fill available space */
       overflow: auto; /* Enables scrolling within panels */
+      align-items: center;
+      text-align: center;
   }
   
   .ExtractFullContent_divider {
@@ -48,3 +50,13 @@
       
 }
 
+.ExtractFullContent_api_response {
+      /* background-color: rgb(202, 101, 101); */
+      margin-left: 5%;
+      margin-right: 5%;
+      text-align: left;
+      white-space: pre-wrap;  /* Wraps the text and preserves whitespace */
+      word-wrap: break-word;  /* Allows long words to be broken and wrapped to the next line */
+      overflow-wrap: break-word; /* Ensures that if any single word is too long, it breaks and wraps to the next line */
+  }
+  

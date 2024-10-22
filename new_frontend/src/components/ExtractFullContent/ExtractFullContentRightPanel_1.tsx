@@ -1,19 +1,19 @@
 import React from 'react';
 import './ExtractFullContentRightPanel_1.css';
-
+import { useFileContext } from '../FileContext';
 
 
 
 const ExtractFullContentRightPanel_1: React.FC<{ onButtonClick: () => void }> = ({ onButtonClick }) => {
 
 
-
+      const { ExtractFullContent } = useFileContext();
 
     return (
       <div>
              
                   {/* <img src='/Sanbox Icon and images\Sanbox Icon and images\RightPanel\Download.png' class='icon' alt='Download_Icon' />   */}
-                  <button className="ExtractFullContent_extract_button" onClick={onButtonClick}>
+                  <button className="ExtractFullContent_extract_button" onClick={ExtractFullContent}>
                         <img src='/Sanbox Icon and images\Sanbox Icon and images\RightPanel\Download.png' className='ExtractFullContent_Dwld_icon' alt='Download_Icon' />  
                         Extract Full Content
 

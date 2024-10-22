@@ -77,3 +77,10 @@ p {
       border-color: #4CAF50; /* Green border when dragging files over */
       background-color: #f0f0f0; /* Lighter background to indicate active drag area */
 }
+
+.UploadInterface_login-message {
+      color: rgb(196, 65, 65);
+      font-size: 14px;
+      font-weight: bold;
+      width: 100%;
+}
