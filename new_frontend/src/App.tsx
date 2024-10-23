@@ -1,4 +1,4 @@
-import React, { useState  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
@@ -18,7 +18,7 @@ const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
 const redirectUri = window.location.origin;
 
- 
+
 
 
 const App: React.FC = () => {
@@ -28,36 +28,55 @@ const App: React.FC = () => {
   const navigateToChooseCategory = () => navigate('/chooseCategory');
 
   const [file, setFile] = useState<File | null>(null);
-
+  const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
+  const steps = [
+    { position: { top: '500px', left: '900px' },
+   content: 'Let’s start with parsing a sample doc!',
+    buttonText: "Got it!",
+    arrowPosition :{'--top':'100%', '--bottom':'none', '--left':'10%', '--right':'none' },
+    shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
+    }
+  
+  
+  
+   
+  
+ 
+  ];
+ 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
         setFile(event.target.files[0]);
     }
   };
+  useEffect(() => {
+    if (file !== null) {
+      navigate('/chooseCategory', { state: { file } });
+    }
+  }, [file]); // This effect depends on the `file` state
+
   const renderPreview = () => {
     if (!file) return (<div className="Mainpage_no-file-selected-container">
                         <img src="/Sanbox Icon and images/Sanbox Icon and images/file display place holder illustration.png"  className="Mainpage_no-file-selected"/>
                         <p className="Mainpage_no-file-selected-text">Your uploaded file will be shown here :)</p>
                         </div>);
+     
+
     const fileUrl = URL.createObjectURL(file);
+    
     if (file.type.startsWith('application/pdf')) {
         return <iframe src={fileUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;
     } else if (file.type.startsWith('image')) {
         return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
     }
   };
-  const { showTour, setShowTour, currentStepIndex, setCurrentStepIndex } = useTour();
-  const steps = [
-    { position: { top: '550px', left: '930px' }, content: 'Let’s start with parsing a sample doc!' },
-    // { position: { top: '200px', left: '250px' }, content: 'You can upload your own document or use one of our samples.' },
-    // { position: { top: '300px', left: '350px' }, content: 'Click on a sample to get started!' },
-  ];
+ 
+   
 
   const handleSampleClick = () => {
-    if (currentStepIndex === 1) {
-      setCurrentStepIndex(2); // Move to the next step, which will be in ChooseCategory
-    }
-    navigateToChooseCategory();
+    
+    navigate('/chooseCategory', { state: { file, isTourStarted } });
   };
 
 
@@ -79,6 +98,7 @@ const App: React.FC = () => {
         <Header />
       
       </div>
+      
       <div>
         <SubHeader />
       </div>
@@ -159,14 +179,15 @@ const App: React.FC = () => {
 
 
 
-            {showTour && currentStepIndex === 0 && (
-                <TourComponent steps={steps} onClose={() => setShowTour(false)} />
-            )}
+          
             <div className="ProductTour">
               <p>Take a Product Tour?</p>
-              <button className="product-tour-go-button" onClick={() => { setShowTour(true); setCurrentStepIndex(0); }}>Start Tour</button>
-              <button className="product-tour-dismiss-button" onClick={() => setShowTour(false)}>Dismiss Tour</button>
+              <button className="product-tour-go-button" onClick={() => { setIsTourStarted(true); setIsTourOpen(true)  }}>Start Tour</button>
+              <button className="product-tour-dismiss-button" onClick={() => setIsTourStarted(false)}>Dismiss</button>
             </div>
+           {isTourOpen && (
+            <TourComponent steps={steps} onClose={() => setIsTourOpen(false)} />
+           )}
              
              
           

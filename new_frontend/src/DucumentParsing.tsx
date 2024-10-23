@@ -1,4 +1,4 @@
-import { useState   } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import React from 'react';
 import Header from './components/Header';
@@ -10,6 +10,7 @@ import ExtractFullContent from './components/ExtractFullContent/ExtractFullConte
 import ExtractKeyValue from './components/ExtractKeyValue/ExtractKeyValue';
 import ExtractTables from './components/ExtractTables/ExtractTables';
 import { FileProvider } from './components/FileContext';
+import TourComponent from './components/TourComponent';
 import axios from 'axios';
 
 
@@ -19,6 +20,56 @@ const DocumentParsing: React.FC = () => {
   
   const [file, setFile] = useState<File | null>(null);
   const [apiResponse, setApiResponse] = useState(null);
+  const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
+  const location = useLocation();
+
+  const steps = [
+    { position: { top: '570px', left: '1030px' },
+   content: 'Decide what to leave out',
+    buttonText: "Got it!",
+    arrowPosition :{'--top':'none', '--bottom':'none', '--left':'100% ', '--right':'none' },
+    shape: {'--clip-path': ' polygon(0% 0, 0% 100%,100% 50%)'}  ,
+    },
+  
+  
+  
+  
+    { position: { top: '370px', left: '980px' },
+   content: 'View parsed content below',
+    buttonText: "Got it!",
+    arrowPosition :{'--bottom':'none', '--top':'100%', '--left':'10%  ', '--right':'none' },
+    shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
+    },
+    
+    { position: { top: '570px', left: '1200px' },
+   content: 'You can download/copy parsed content or redo the task',
+    buttonText: "Got it!",
+    arrowPosition :{'--bottom':'100%', '--top':'none', '--left':'none  ', '--right':'none' },
+    shape: {'--clip-path': 'polygon(0 100%, 100% 100%, 50% 0)'}  ,
+    },
+    { position: { top: '700px', left: '1200px' },
+   content: 'Great job! Now you can upload your doc to start parsing',
+    buttonText: "Finish",
+    arrowPosition :{'--bottom':'none', '--top':'100%', '--left':'none  ', '--right':'none' },
+    shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
+    },
+  
+  
+ 
+  ];
+
+  useEffect(() => {
+    if (location.state) {
+      const state = location.state as any;
+      if (state.file) setFile(state.file);
+       
+    }
+    if (location.state && (location.state as any).isTourStarted) {
+      setIsTourStarted((location.state as any).isTourStarted);
+      setIsTourOpen((location.state as any).isTourStarted);
+    }
+  }, [location]);
   const handleFileChange = (file: File) => {
       setFile(file);
   };
@@ -30,26 +81,36 @@ const DocumentParsing: React.FC = () => {
   const server_url_full = "http://35.95.52.139:8000/parse"
   const api_key = "Cambio2024!"
   const ExtractKeyValuePostServer = async () => {
-    if (!file) {
-      alert('Please select a file first.');
-      return;
+    let fileToUse = file;
+    if (! fileToUse) {
+       
+      try {
+          const response = await fetch(defaultPdfUrl);
+          const blob = await response.blob();
+          fileToUse = new File([blob], 'defaultfile.pdf', { type: blob.type });
+      } catch (error) {
+          alert('Error fetching the default file. Please try again.');
+          return;
+      }
+          
+      
     }
 
     // Check file size (e.g., limit to 10MB)
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
-    if (file.size > MAX_FILE_SIZE) {
+    if (fileToUse.size > MAX_FILE_SIZE) {
       alert(`File size exceeds the limit of ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
       return;
     }
 
     try {
       // Read and encode the file
-      const fileContent = await readFileAsBase64(file);
+      const fileContent = await readFileAsBase64(fileToUse);
 
       const payload = {
         input_keys: input_keys,
         file_content: fileContent,
-        file_name: file.name,
+        file_name: fileToUse.name,
       };
 
       const headers = {
@@ -72,26 +133,36 @@ const DocumentParsing: React.FC = () => {
   };
 
   const ExtractFullContentPostServer = async () => {
-    if (!file) {
-      alert('Please select a file first.');
-      return;
+    let fileToUse = file;
+    if (! fileToUse) {
+       
+      try {
+          const response = await fetch(defaultPdfUrl);
+          const blob = await response.blob();
+          fileToUse = new File([blob], 'defaultfile.pdf', { type: blob.type });
+      } catch (error) {
+          alert('Error fetching the default file. Please try again.');
+          return;
+      }
+          
+      
     }
 
     // Check file size (e.g., limit to 10MB)
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
-    if (file.size > MAX_FILE_SIZE) {
+    if (fileToUse.size > MAX_FILE_SIZE) {
       alert(`File size exceeds the limit of ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
       return;
     }
 
     try {
       // Read and encode the file
-      const fileContent = await readFileAsBase64(file);
+      const fileContent = await readFileAsBase64(fileToUse);
 
       const payload = {
         
         file_content: fileContent,
-        file_name: file.name,
+        file_name: fileToUse.name,
       };
 
       const headers = {
@@ -142,17 +213,17 @@ const DocumentParsing: React.FC = () => {
             return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
             }
       }
-      if (defaultPdfUrl  ) { 
+      if (!file && defaultPdfUrl  ) { 
             return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;}
           
-      if (!file) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
+      if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
 
       
     };
 
 
 
-    const location = useLocation();
+     
     const initialCategory = location.state?.category || 'full';
 
 
@@ -239,6 +310,10 @@ const DocumentParsing: React.FC = () => {
              
         </div>
       </div>
+      {isTourOpen && (
+            <TourComponent steps={steps} onClose={() => setIsTourOpen(false)} />
+           )}
+     
     </div >
   );
 };

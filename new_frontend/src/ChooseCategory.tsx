@@ -1,5 +1,5 @@
-import { useState  } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState  } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React from 'react';
 import Header from './components/Header';
 import SubHeader from './components/SubHeader';
@@ -11,24 +11,47 @@ import { useTour } from './components/TourContext';
 
 const ChooseCategory: React.FC = () => {
   const navigate = useNavigate();
-  const { showTour, setShowTour, currentStepIndex, setCurrentStepIndex } = useTour();
-
+  const location = useLocation();
+  const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
   const steps = [
-    { position: { top: '100px', left: '150px' }, content: 'Choose a category to parse your document.' },
-    
-  ];
+    { position: { top: '170px', left: '200px' },
+   content: 'The original documents will be shown here',
+    buttonText: "Got it!",
+    arrowPosition :{'--top':'100%', '--bottom':'none', '--left':'10%', '--right':'none' },
+    shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
+    },
+  
+  
+  
+  
+    { position: { top: '950px', left: '780px' },
+   content: 'Choose your parsing method',
+    buttonText: "Got it!",
+    arrowPosition :{'--bottom':'100%', '--top':'none', '--left':'10%  ', '--right':'none' },
+    shape: {'--clip-path': 'polygon(0 100%, 100% 100%, 50% 0)'}  ,
+    },
 
-  const allSteps = [
-    ...steps,
-    { position: { top: '400px', left: '450px' }, content: 'Tour completed! You can now start parsing your document.' },
+    
+  
+  
+ 
   ];
+   
+  useEffect(() => {
+    // Check if there is a file passed in the location state
+    if (location.state && (location.state as any).file) {
+      setFile((location.state as any).file);
+    }
+    if (location.state && (location.state as any).isTourStarted) {
+      setIsTourStarted((location.state as any).isTourStarted);
+      setIsTourOpen((location.state as any).isTourStarted);
+    }
+  }, [location]);
 
   const handleCategoryClick = (category: string) => {
-    if (currentStepIndex === 5) {
-      setShowTour(false);
-      setCurrentStepIndex(0);
-    }
-    navigate('/documentParsing', { state: { category } });
+     
+    navigate('/documentParsing', { state: { file, category, isTourStarted } });
   };
 
   // Assuming the URL of your default PDF
@@ -43,16 +66,18 @@ const ChooseCategory: React.FC = () => {
   };
 
   const renderPreview = () => {
-      if (defaultPdfUrl) { 
-        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;}
-      if (!file) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
-  
-      const fileUrl = URL.createObjectURL(file);
+      if (file) {
+        const fileUrl = URL.createObjectURL(file);
       if (file.type.startsWith('application/pdf')) {
           return <iframe src={fileUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;
       } else if (file.type.startsWith('image')) {
           return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
       }
+      }
+      if (!file && defaultPdfUrl) { 
+        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;}
+      if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
+      
     };
 
   return (
@@ -105,9 +130,9 @@ const ChooseCategory: React.FC = () => {
         </div>
         
       </div>
-      {showTour && currentStepIndex >= 3 && currentStepIndex < 6 && (
-        <TourComponent steps={allSteps} onClose={() => setShowTour(false)} />
-      )}
+      {isTourOpen && (
+            <TourComponent steps={steps} onClose={() => setIsTourOpen(false)} />
+           )}
     </div>
   );
 };
