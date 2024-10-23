@@ -59,7 +59,7 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
             <div className="ExtractKeyValue_left_panel" style={{ width: `${leftWidth}%` }}>
             {KeyValue_apiResponse && (
                 <div>
-                    <h2>API Response:</h2>
+                    
                     <pre className='ExtractKeyValue_api_response'>{JSON.stringify(KeyValue_apiResponse.output, null, 2)}</pre>
                 </div>
             )}
