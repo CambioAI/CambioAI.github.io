@@ -12,6 +12,13 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
   const { isAuthenticated } = useAuth0();
   const [dragOver, setDragOver] = useState(false);
 
+  const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+    if (!isAuthenticated) {
+      alert("You must be logged in to upload a file.");
+      e.preventDefault(); // Prevents the file dialog from opening
+    }
+  };
+
   const handleDragEnter = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -56,6 +63,7 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
   };
 
   const handleFileUpload = (file: File) => {
+     
     const mockEvent = {
       target: {
         files: [file],
@@ -82,7 +90,11 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
         id="file-input" 
         disabled={!isAuthenticated}
       />
-      <label htmlFor="file-input" className={`upload-button ${!isAuthenticated ? 'disabled' : ''}`}>
+      <label 
+        htmlFor="file-input" 
+          className={`upload-button ${!isAuthenticated ? 'disabled' : ''}`}
+        onClick={handleLabelClick}
+      >
         <div className={dragOver ? "upload-box dragover" : "upload-box"}>
           <img src='/Sanbox Icon and images/Sanbox Icon and images/Upload icons.png' className='UploadInterface_upload-icon' />
           <h2 className='UploadInterface_description'>PDF, PNG, JPEG, JPG, PPT, and DOCX</h2>

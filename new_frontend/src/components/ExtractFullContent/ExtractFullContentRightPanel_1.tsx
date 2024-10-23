@@ -7,9 +7,9 @@ import { useFileContext } from '../FileContext';
 const ExtractFullContentRightPanel_1: React.FC<{ onButtonClick: () => void }> = ({ onButtonClick }) => {
 
 
-      const { ExtractFullContent } = useFileContext();
+      const { ExtractFullContentPostServer } = useFileContext();
       const handleButtonClick = () => {
-            ExtractFullContent(); // Calls the ExtractFullContent function
+            ExtractFullContentPostServer (); // Calls the ExtractFullContent function
             onButtonClick(); // Calls the onButtonClick function passed as a prop
         }
 

@@ -69,13 +69,13 @@ const ChooseCategory: React.FC = () => {
       if (file) {
         const fileUrl = URL.createObjectURL(file);
       if (file.type.startsWith('application/pdf')) {
-          return <iframe src={fileUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;
+          return <iframe src={fileUrl} style={{ width: '100%', height: '90vh' }} frameBorder="0"></iframe>;
       } else if (file.type.startsWith('image')) {
           return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
       }
       }
       if (!file && defaultPdfUrl) { 
-        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;}
+        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '90vh' }} frameBorder="0"></iframe>;}
       if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
       
     };

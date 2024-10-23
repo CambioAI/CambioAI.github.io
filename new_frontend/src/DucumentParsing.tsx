@@ -19,7 +19,8 @@ const DocumentParsing: React.FC = () => {
   const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";  
   
   const [file, setFile] = useState<File | null>(null);
-  const [apiResponse, setApiResponse] = useState(null);
+  const [FullContent_apiResponse, setFullContent_apiResponse] = useState(null);
+  const [KeyValue_apiResponse, setKeyValue_apiResponse] = useState(null);
   const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
   const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
   const location = useLocation();
@@ -80,7 +81,16 @@ const DocumentParsing: React.FC = () => {
   const server_url_keyValues = "http://35.95.52.139:8000/extract"
   const server_url_full = "http://35.95.52.139:8000/parse"
   const api_key = "Cambio2024!"
-  const ExtractKeyValuePostServer = async () => {
+  const ExtractKeyValuePostServer = async (input_keys: string[]) => {
+    
+    if (input_keys.length == 0) {
+      alert("You need to have at least one key");
+      return;
+    }
+    if (input_keys[0] == "") {
+      alert("You need to have at least one key");
+      return;
+    }
     let fileToUse = file;
     if (! fileToUse) {
        
@@ -120,7 +130,7 @@ const DocumentParsing: React.FC = () => {
       console.log("started");
       const response = await axios.post(server_url_keyValues, payload, { headers });
       console.log(JSON.stringify(response.data, null, 2));
-      setApiResponse(response.data);
+      setKeyValue_apiResponse(response.data);
       // Handle successful response (e.g., update state, show success message)
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -172,7 +182,7 @@ const DocumentParsing: React.FC = () => {
       console.log("started");
       const response = await axios.post(server_url_full, payload, { headers });
       console.log(JSON.stringify(response.data, null, 2));
-      setApiResponse(response.data);
+      setFullContent_apiResponse(response.data);
       // Handle successful response (e.g., update state, show success message)
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -208,13 +218,13 @@ const DocumentParsing: React.FC = () => {
       if (file) {
             const fileUrl = URL.createObjectURL(file);
             if (file.type.startsWith('application/pdf')) {
-            return <iframe src={fileUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;
+            return <iframe src={fileUrl} style={{ width: '100%', height: '90vh' }} frameBorder="0"></iframe>;
             } else if (file.type.startsWith('image')) {
             return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
             }
       }
       if (!file && defaultPdfUrl  ) { 
-            return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '500px' }} frameBorder="0"></iframe>;}
+            return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '90vh' }} frameBorder="0"></iframe>;}
           
       if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
 
@@ -289,11 +299,11 @@ const DocumentParsing: React.FC = () => {
             </button>
           </div>
           <div className="DocumentParsing_category-content">
-          <FileProvider ExtractKeyValue={ExtractKeyValuePostServer} ExtractFullContent={ExtractFullContentPostServer}>
+          <FileProvider ExtractKeyValuePostServer={ExtractKeyValuePostServer} ExtractFullContentPostServer={ExtractFullContentPostServer}>
        
-          <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} apiResponse={apiResponse} />
+          <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} FullContent_apiResponse={FullContent_apiResponse} />
           <ExtractTables isActive={activeCategory === 'tables'} onFileChange={handleFileChange} />  
-          <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} apiResponse={apiResponse} />  
+          <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} KeyValue_apiResponse={KeyValue_apiResponse} />  
             {/* {renderCategoryContent()} */}
 
           

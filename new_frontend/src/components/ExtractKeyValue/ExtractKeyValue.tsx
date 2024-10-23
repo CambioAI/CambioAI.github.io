@@ -10,13 +10,13 @@ import ExtractKeyValueRightPanel from './ExtractKeyValueRightPanel';
 interface ExtractKeyValueProps {
       isActive: boolean;
       onFileChange: (file: File) => void; 
-      apiResponse: any;
+      KeyValue_apiResponse: any;
     
       
 }
 
 
-const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChange, apiResponse }) => {
+const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChange, KeyValue_apiResponse }) => {
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -57,10 +57,10 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
          
       <div ref={containerRef} className="split-container">
             <div className="ExtractKeyValue_left_panel" style={{ width: `${leftWidth}%` }}>
-            {apiResponse && (
+            {KeyValue_apiResponse && (
                 <div>
                     <h2>API Response:</h2>
-                    <pre className='ExtractKeyValue_api_response'>{JSON.stringify(apiResponse, null, 2)}</pre>
+                    <pre className='ExtractKeyValue_api_response'>{JSON.stringify(KeyValue_apiResponse.output, null, 2)}</pre>
                 </div>
             )}
              

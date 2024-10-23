@@ -1,9 +1,10 @@
 // ExtractFullContent.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './ExtractFullContent.css';
 import UploadInterface from '../UploadInterface';
 import ExtractFullContentRightPanel_1 from './ExtractFullContentRightPanel_1';
 import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
+import ReactMarkdown from 'react-markdown';
 import { useFileContext } from '../FileContext';
 
 
@@ -12,16 +13,22 @@ import { useFileContext } from '../FileContext';
 interface ExtractFullContentProps {
       isActive: boolean;
       onFileChange: (file: File) => void; 
-      apiResponse: any;
+      FullContent_apiResponse: any;
 }
 
 
-const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange, apiResponse  }) => {
+const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange, FullContent_apiResponse  }) => {
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
             }
       };
+      const [markdown, setMarkdown] = useState('');
+      useEffect(() => {
+            if (FullContent_apiResponse) {
+                setMarkdown(FullContent_apiResponse.output);
+            }
+        }, [FullContent_apiResponse]);    
       const [showPanel, setShowPanel] = useState(1);  // State to toggle panels
       const togglePanel = () => {
             setShowPanel(showPanel === 1 ? 2 : 1);
@@ -57,12 +64,12 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
          
       <div ref={containerRef} className="split-container">
             <div className="ExtractFullContent_left_panel" style={{ width: `${leftWidth}%` }}>
-            {apiResponse && (
-                <div>
-                    <h2>  API Response:</h2>
-                    <pre className='ExtractFullContent_api_response'>{JSON.stringify(apiResponse, null, 2)}</pre>
-                </div>
-            )}
+            {FullContent_apiResponse && (
+                    <div className='ExtractFullContent_markdown'>
+                         
+                        <ReactMarkdown>{markdown}</ReactMarkdown>
+                    </div>
+                )}
                
             </div>
             <div className="ExtractFullContent_divider" onMouseDown={startResize}></div>

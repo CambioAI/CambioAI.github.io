@@ -13,7 +13,7 @@ const ExtractKeyValueRightPanel = (   ) => {
             optional: string;
             expanded: boolean;
       };
-        const { ExtractKeyValue } = useFileContext();
+        const { ExtractKeyValuePostServer } = useFileContext();
 
 
        const [inputPairs, setInputPairs] = useState<InputPair[]>([{ key: '', optional: '', expanded: false }]);
@@ -22,6 +22,10 @@ const ExtractKeyValueRightPanel = (   ) => {
         if (inputPairs.length < 10) {
             setInputPairs([...inputPairs, { key: '', optional: '', expanded: false }]);
         }
+    };
+    const handleExtractClick = async () => {
+        const input_keys = inputPairs.map(pair => pair.key).filter(key => key !== ''); // Filter out empty keys if needed
+        await ExtractKeyValuePostServer(input_keys); // Pass the keys to your post function
     };
 
     const toggleExpand = (index: number): void => {
@@ -37,6 +41,7 @@ const ExtractKeyValueRightPanel = (   ) => {
     // Function to remove an input pair
     const handleRemoveInputPair = (index: number): void => {
             const newInputPairs = inputPairs.filter((_, i) => i !== index);
+             
             setInputPairs(newInputPairs);
       };
 
@@ -45,7 +50,7 @@ const ExtractKeyValueRightPanel = (   ) => {
       <div>
             
             {/* <button className="ExtractKeyValue_extract_button" onClick={onButtonClick}>Extract Full Content</button> */}
-            <button className="ExtractKeyValue_extract_button" onClick={ExtractKeyValue}>Extract Key-Value</button>
+            <button className="ExtractKeyValue_extract_button" onClick={handleExtractClick}>Extract Key-Value</button>
             <h2 className="ExtractKeyValueRightPanel_header">Leave-out Info</h2>
             <li className="ExtractKeyValue_checkbox_list">
                 <label>

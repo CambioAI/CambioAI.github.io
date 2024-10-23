@@ -59,4 +59,10 @@
       word-wrap: break-word;  /* Allows long words to be broken and wrapped to the next line */
       overflow-wrap: break-word; /* Ensures that if any single word is too long, it breaks and wraps to the next line */
   }
-  
+.ExtractFullContent_markdown {
+      margin-left: 5%;
+      margin-right: 5%;
+      text-align: left;
+       
+      word-wrap: break-word;  /* Allows long words to be broken and wrapped to the next line */
+}
