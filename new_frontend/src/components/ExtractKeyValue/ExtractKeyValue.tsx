@@ -3,8 +3,8 @@ import React, { useState, useRef } from 'react';
 import './ExtractKeyValue.css';
 import UploadInterface from '../UploadInterface';
 import ExtractKeyValueRightPanel from './ExtractKeyValueRightPanel';
-
-
+import KeyValueApiResponseTable from '../KeyValueApiResponseTable';
+import { useLoading } from '../FileContext';
 
 
 interface ExtractKeyValueProps {
@@ -26,6 +26,7 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
       const togglePanel = () => {
             setShowPanel(showPanel === 1 ? 2 : 1);
       };
+      const { isLoading } = useLoading();
 
 
       const [leftWidth, setLeftWidth] = useState(70); // Initial width in percentage
@@ -49,6 +50,7 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
             document.removeEventListener('mousemove', resize);
             document.removeEventListener('mouseup', stopResize);
             };
+       
 
 
     if (!isActive) return null;
@@ -57,10 +59,20 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
          
       <div ref={containerRef} className="split-container">
             <div className="ExtractKeyValue_left_panel" style={{ width: `${leftWidth}%` }}>
-            {KeyValue_apiResponse && (
+            {isLoading && (
+                  <div className='ExtractKeyValue_loading_container'>
+                        
+                        <div className='ExtractKeyValue_loading'>
+                              
+                              
+                        </div>
+                        <p>Extracting Key-Value pairs from the document...</p>
+                </div>
+            )}
+            {(KeyValue_apiResponse && !isLoading) && (
                 <div>
                     
-                    <pre className='ExtractKeyValue_api_response'>{JSON.stringify(KeyValue_apiResponse.output, null, 2)}</pre>
+                    <KeyValueApiResponseTable className='ExtractKeyValue_api_response' data={KeyValue_apiResponse} />
                 </div>
             )}
              

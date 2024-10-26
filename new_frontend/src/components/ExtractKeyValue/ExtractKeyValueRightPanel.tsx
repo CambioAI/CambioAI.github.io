@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ExtractKeyValueRightPanel.css';
-import { useFileContext } from '../FileContext';
+import { useFileContext, useLoading } from '../FileContext';
 
 import UploadInterface from '../UploadInterface';
 
@@ -14,7 +14,7 @@ const ExtractKeyValueRightPanel = (   ) => {
             expanded: boolean;
       };
         const { ExtractKeyValuePostServer } = useFileContext();
-
+        const { setIsLoading } = useLoading();
 
        const [inputPairs, setInputPairs] = useState<InputPair[]>([{ key: '', optional: '', expanded: false }]);
 
@@ -23,10 +23,23 @@ const ExtractKeyValueRightPanel = (   ) => {
             setInputPairs([...inputPairs, { key: '', optional: '', expanded: false }]);
         }
     };
-    const handleExtractClick = async () => {
-        const input_keys = inputPairs.map(pair => pair.key).filter(key => key !== ''); // Filter out empty keys if needed
-        await ExtractKeyValuePostServer(input_keys); // Pass the keys to your post function
-    };
+    const handleExtractClick = async () => {    
+        setIsLoading(true);
+        const input_keys = inputPairs
+            .map(pair => pair.key)
+            .filter(key => key !== ''); // Filter out empty keys if needed
+        const input_descriptions = inputPairs
+            .filter(pair => pair.key !== '') // Discard entries where key is empty
+            .map(pair => pair.optional || pair.key); // Use optional or default to key
+
+        try {
+            await ExtractKeyValuePostServer(input_keys, input_descriptions);
+            // Handle success
+            } catch (error) {
+            // Handle error
+            }
+            setIsLoading(false);
+        };
 
     const toggleExpand = (index: number): void => {
         const newInputPairs = inputPairs.map((pair, i) => {

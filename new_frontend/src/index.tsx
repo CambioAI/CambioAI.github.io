@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ChooseCategory from './ChooseCategory';
-import DocumentParsing from './DucumentParsing';
+import DocumentParsing from './DocumentParsing';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { TourProvider } from './components/TourContext';
 

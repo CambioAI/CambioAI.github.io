@@ -9,7 +9,7 @@ import './DocumentParsing.css';
 import ExtractFullContent from './components/ExtractFullContent/ExtractFullContent';
 import ExtractKeyValue from './components/ExtractKeyValue/ExtractKeyValue';
 import ExtractTables from './components/ExtractTables/ExtractTables';
-import { FileProvider } from './components/FileContext';
+import { FileProvider, LoadingProvider } from './components/FileContext';
 import TourComponent from './components/TourComponent';
 import axios from 'axios';
 
@@ -81,7 +81,7 @@ const DocumentParsing: React.FC = () => {
   const server_url_keyValues = "http://35.95.52.139:8000/extract"
   const server_url_full = "http://35.95.52.139:8000/parse"
   const api_key = "Cambio2024!"
-  const ExtractKeyValuePostServer = async (input_keys: string[]) => {
+  const ExtractKeyValuePostServer = async (input_keys: string[], input_descriptions: string[]) => {
     
     if (input_keys.length == 0) {
       alert("You need to have at least one key");
@@ -119,8 +119,9 @@ const DocumentParsing: React.FC = () => {
 
       const payload = {
         input_keys: input_keys,
+        input_descriptions: input_descriptions,
         file_content: fileContent,
-        file_name: fileToUse.name,
+        file_type: "pdf",
       };
 
       const headers = {
@@ -128,7 +129,9 @@ const DocumentParsing: React.FC = () => {
         "Content-Type": "application/json"
       };
       console.log("started");
-      const response = await axios.post(server_url_keyValues, payload, { headers });
+      console.log(input_keys);
+      console.log(input_descriptions);
+      const response = await axios.post(server_url_keyValues, payload);
       console.log(JSON.stringify(response.data, null, 2));
       setKeyValue_apiResponse(response.data);
       // Handle successful response (e.g., update state, show success message)
@@ -264,7 +267,8 @@ const DocumentParsing: React.FC = () => {
     <div className="DocumentParsing">
       <Header   />
       <SubHeader   />
-      <div className="DocumentParsing_container">
+      <LoadingProvider>
+          <div className="DocumentParsing_container">
         <div className="DocumentParsing_left_panel">
           <div className="left-header">
             <h2>File Outlook</h2>
@@ -323,8 +327,9 @@ const DocumentParsing: React.FC = () => {
       {isTourOpen && (
             <TourComponent steps={steps} onClose={() => setIsTourOpen(false)} />
            )}
-     
+    </LoadingProvider> 
     </div >
+    
   );
 };
 
