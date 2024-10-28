@@ -31,6 +31,7 @@
       border-radius: 10px;
       margin: 10px;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      height: 100%;
 
 
       
@@ -45,7 +46,8 @@
        
       margin-left: 5%;
       margin-right: 5%;
-      height: 40%;
+ 
+      /* height: 40%; */
        
       
 }

@@ -120,8 +120,9 @@ const App: React.FC = () => {
             <div className="left-header">
               <h2>File Outlook</h2>
             </div>
-            
-            {renderPreview()}
+            <div className="Mainpage_render-preview-container">  
+              {renderPreview()}
+            </div>
           </div>
 
 

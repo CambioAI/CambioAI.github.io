@@ -69,13 +69,13 @@ const ChooseCategory: React.FC = () => {
       if (file) {
         const fileUrl = URL.createObjectURL(file);
       if (file.type.startsWith('application/pdf')) {
-          return <iframe src={fileUrl} style={{ width: '100%', height: '90vh' }} frameBorder="0"></iframe>;
+          return <iframe src={fileUrl} style={{ width: '100%', height: '85vh' }}  ></iframe>;
       } else if (file.type.startsWith('image')) {
           return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
       }
       }
       if (!file && defaultPdfUrl) { 
-        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '90vh' }} frameBorder="0"></iframe>;}
+        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '85vh' }} frameBorder="0"></iframe>;}
       if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
       
     };
@@ -103,21 +103,27 @@ const ChooseCategory: React.FC = () => {
           <div className="ChooseCategory-buttons"> 
             <button className="ChooseCategory-button" onClick={() => handleCategoryClick('full')}>
               <img src=" \Sanbox Icon and images\Sanbox Icon and images\extract full content illustration.png"  className="ChooseCategory-button-image"/>
-              <h2 className="ChooseCategory-button-title">Extract Full Content</ h2>
-              <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+              <div className="ChooseCategory-button-content ">
+                <h2 className="ChooseCategory-button-title">Extract Full Content</ h2>
+                <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+              </div>
             </button>
 
             <button className="ChooseCategory-button" onClick={() => handleCategoryClick('tables')}>
               <img src=" \Sanbox Icon and images\Sanbox Icon and images\extract table illustration.png" className="ChooseCategory-button-image" />
-              <h2 className="ChooseCategory-button-title">Extract Tables Only</ h2>
-              <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+              <div className="ChooseCategory-button-content ">
+                <h2 className="ChooseCategory-button-title">Extract Tables Only</ h2>
+                <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+              </div>
 
             </button>
 
             <button className="ChooseCategory-button" onClick={() => handleCategoryClick('keyValue')}>
               <img src=" \Sanbox Icon and images\Sanbox Icon and images\Parse illustration.png" className="ChooseCategory-button-image"/>
-              <h2 className="ChooseCategory-button-title">Extract Key-Value Pairs</ h2>
-              <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+              <div className="ChooseCategory-button-content ">
+                <h2 className="ChooseCategory-button-title">Extract Key-Value Pairs</ h2>
+                <p className="ChooseCategory-button-description">Extract complete content from any document with no coding required! Download the extracted data as markdown or integrate it seamlessly with your software.</p>
+              </div>
 
 
 
