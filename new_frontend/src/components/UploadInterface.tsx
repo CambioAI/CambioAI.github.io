@@ -98,8 +98,8 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
         <div className={dragOver ? "upload-box dragover" : "upload-box"}>
           <img src='/Sanbox Icon and images/Sanbox Icon and images/Upload icons.png' className='UploadInterface_upload-icon' />
           <h2 className='UploadInterface_description'>PDF, PNG, JPEG, JPG, PPT, and DOCX</h2>
-          <div className="UploadInterface_header">
-            <h1>Upload</h1>
+          <div>
+            <h1 className="UploadInterface_header">Upload</h1>
           </div>
           <div className='UploadInterface_file-description'>
             <p>{isAuthenticated 

@@ -30,7 +30,7 @@
 
 .UploadInterface_header  {
       font-family: Helvetica Neue;
-      font-size: 12px;
+      font-size: 18px;
       font-weight: 700;
      
    
@@ -80,7 +80,7 @@ p {
 
 .UploadInterface_login-message {
       color: rgb(196, 65, 65);
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
       width: 100%;
 }
