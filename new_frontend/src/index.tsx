@@ -26,7 +26,7 @@ root.render(
 
 
 
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
     <TourProvider>
         <Routes>
           <Route path="/" element={<App />} />
