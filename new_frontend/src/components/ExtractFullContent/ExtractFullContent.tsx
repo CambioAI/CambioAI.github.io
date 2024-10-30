@@ -5,7 +5,7 @@ import UploadInterface from '../UploadInterface';
 import ExtractFullContentRightPanel_1 from './ExtractFullContentRightPanel_1';
 import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
 import ReactMarkdown from 'react-markdown';
-import { useFileContext } from '../FileContext';
+import { useFileContext, useLoading } from '../FileContext';
 
 
 
@@ -18,6 +18,7 @@ interface ExtractFullContentProps {
 
 
 const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange, FullContent_apiResponse  }) => {
+      const { isLoading } = useLoading();
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -30,7 +31,7 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
             }
         }, [FullContent_apiResponse]);
       const [showPanel, setShowPanel] = useState(1);  // State to toggle panels
-      const togglePanel = () => {
+      const togglePanel = async () => {
             setShowPanel(showPanel === 1 ? 2 : 1);
       };
 
@@ -64,7 +65,17 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
 
       <div ref={containerRef} className="split-container">
             <div className="ExtractFullContent_left_panel" style={{ width: `${leftWidth}%` }}>
-            {FullContent_apiResponse && (
+            {isLoading && (
+                  <div className='ExtractFullContent_loading_container'>
+
+                        <div className='ExtractFullContent_loading'>
+
+
+                        </div>
+                        <p>Extracting content from the document...</p>
+                </div>
+            )}
+            {FullContent_apiResponse && !isLoading && (
                     <div className='ExtractFullContent_markdown'>
 
                         <ReactMarkdown>{markdown}</ReactMarkdown>

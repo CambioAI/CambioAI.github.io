@@ -60,3 +60,14 @@ line-height: 12.1px;
       margin-right: 10px;
 }
 
+
+.ExtractFullContentRightPanel_1_loading_overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 1000;
+      cursor: not-allowed;
+  }

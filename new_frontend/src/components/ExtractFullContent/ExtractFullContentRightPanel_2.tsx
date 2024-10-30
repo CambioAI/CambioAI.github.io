@@ -1,25 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './ExtractFullContentRightPanel_2.css';
 import ExtractFullContentChatbot from './ExtractFullContentChatbot';
-
 const ExtractFullContentRightPanel_2: React.FC<{ onButtonClick: () => void }> = ({ onButtonClick }) => {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        // Temporary stub: disable loading after 2 seconds
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     return (
         <div className='ExtractFullContentRightPanel_2_container'>
-            {loading && (
-                <div className='ExtractFullContentRightPanel_2_loading_overlay'>
-                </div>
-            )}
             <div className='ExtractFullContentRightPanel_2_chatbot'>
                 <ExtractFullContentChatbot />
             </div>

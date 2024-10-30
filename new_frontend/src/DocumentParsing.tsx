@@ -75,20 +75,18 @@ const DocumentParsing: React.FC = () => {
       setFile(file);
   };
 
-
-
-  // const input_keys = ["name", "address", "phone", "email"]
-  const server_url_keyValues = "http://35.87.52.57:8000/extract"
-  const server_url_full = "http://35.87.52.57:8000/full_content"
-  const server_url_qa = "http://35.87.52.57:8000/qa"
-  const api_key = "Cambio2024!"
+  const base_url = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? process.env.REACT_APP_LOCAL_SERVER_URL : process.env.REACT_APP_DEPLOYED_SERVER_URL;
+  const server_url_keyValues = `${base_url}/extract`
+  const server_url_full = `${base_url}/full_content`
+  const server_url_qa = `${process.env.REACT_APP_LOCAL_SERVER_URL}/qa`
+  const api_key = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? process.env.REACT_APP_LOCAL_SERVER_API_KEY : process.env.REACT_APP_DEPLOYED_SERVER_API_KEY;
   const ExtractKeyValuePostServer = async (input_keys: string[], input_descriptions: string[]) => {
 
-    if (input_keys.length == 0) {
+    if (input_keys.length === 0) {
       alert("You need to have at least one key");
       return;
     }
-    if (input_keys[0] == "") {
+    if (input_keys[0] === "") {
       alert("You need to have at least one key");
       return;
     }
