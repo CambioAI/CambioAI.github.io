@@ -3,7 +3,8 @@ Webstie based on [Figma](https://www.figma.com/design/ZEELu7pfjIC5qBCQJChrRy/Cam
 
 ## Quick setup
 
-Sse `npm start` to start.
+Use `npm start` to start.
+Please refer to [React PDF](https://github.com/wojtekmaj/react-pdf) to install related packages.
 
 ## Structure
 
