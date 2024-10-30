@@ -4,10 +4,12 @@ const FileContext = createContext<{
   ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void;
   ExtractFullContentPostServer: () => void;
   ExtractQAPostServer: (userMessage: string) => Promise<string>;
+  ExtractTablesPostServer: () => void;
 }>({
   ExtractKeyValuePostServer: () => {},
   ExtractFullContentPostServer: () => {},
   ExtractQAPostServer: async () => "",
+  ExtractTablesPostServer: () => {},
 });
 
 
@@ -19,8 +21,9 @@ export const FileProvider: React.FC<{
   ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void,
   ExtractFullContentPostServer: () => void,
   ExtractQAPostServer: (userMessage: string) => Promise<string>,
-}> = ({ children, ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer }) => (
-  <FileContext.Provider value={{ ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer }}>
+  ExtractTablesPostServer: () => void,
+}> = ({ children, ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer, ExtractTablesPostServer }) => (
+  <FileContext.Provider value={{ ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer, ExtractTablesPostServer }}>
     {children}
   </FileContext.Provider>
 );
