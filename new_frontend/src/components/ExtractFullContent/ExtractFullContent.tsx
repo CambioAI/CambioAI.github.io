@@ -6,7 +6,7 @@ import ExtractFullContentRightPanel_1 from './ExtractFullContentRightPanel_1';
 import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useFileContext, useLoading } from '../FileContext';
+import { useLoading } from '../FileContext';
 
 
 
