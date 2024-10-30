@@ -12,7 +12,7 @@ import { useFileContext } from '../FileContext';
 
 interface ExtractFullContentProps {
       isActive: boolean;
-      onFileChange: (file: File) => void; 
+      onFileChange: (file: File) => void;
       FullContent_apiResponse: any;
 }
 
@@ -26,16 +26,16 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
       const [markdown, setMarkdown] = useState('');
       useEffect(() => {
             if (FullContent_apiResponse) {
-                setMarkdown(FullContent_apiResponse.output);
+                setMarkdown(FullContent_apiResponse.output_dict["markdown"][0]);
             }
-        }, [FullContent_apiResponse]);    
+        }, [FullContent_apiResponse]);
       const [showPanel, setShowPanel] = useState(1);  // State to toggle panels
       const togglePanel = () => {
             setShowPanel(showPanel === 1 ? 2 : 1);
       };
 
 
-      const [leftWidth, setLeftWidth] = useState(70); // Initial width in percentage
+      const [leftWidth, setLeftWidth] = useState(50); // Initial width in percentage
       const containerRef = useRef<HTMLDivElement>(null);
 
       const startResize = (event: React.MouseEvent) => {
@@ -61,37 +61,37 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
     if (!isActive) return null;
 
     return (
-         
+
       <div ref={containerRef} className="split-container">
             <div className="ExtractFullContent_left_panel" style={{ width: `${leftWidth}%` }}>
             {FullContent_apiResponse && (
                     <div className='ExtractFullContent_markdown'>
-                         
+
                         <ReactMarkdown>{markdown}</ReactMarkdown>
                     </div>
                 )}
-               
+
             </div>
             <div className="ExtractFullContent_divider" onMouseDown={startResize}></div>
             <div className="ExtractFullContent_right_panel" style={{ width: `${100 - leftWidth}%` }}>
-                   
+
                   {showPanel === 1 ? (
                     <ExtractFullContentRightPanel_1 onButtonClick={togglePanel} />
                         ) : (
                               <ExtractFullContentRightPanel_2 onButtonClick={togglePanel} />
                   )}
-                  <div className="ExtractFullContent_upload_interface">
+                  {/* <div className="ExtractFullContent_upload_interface">
                         <UploadInterface   onChange={handleFileChange}  />
-                  </div>
-                  
+                  </div> */}
+
             </div>
         </div>
 
 
 
 
-            
-        
+
+
     );
 };
 

@@ -3,14 +3,14 @@
       height: 100vh; /* Full height of the viewport */
       overflow: hidden; /* Prevents scrollbars from appearing when resizing */
   }
-  
+
   .ExtractFullContent_left_panel {
       flex-grow: 1; /* Allows panels to grow and fill available space */
       overflow: auto; /* Enables scrolling within panels */
       align-items: center;
       text-align: center;
   }
-  
+
   .ExtractFullContent_divider {
       cursor: ew-resize; /* Indicates the divider can be dragged horizontally */
       width: 10px; /* Width of the divider */
@@ -21,35 +21,30 @@
       margin-left: 30px;
       font-size: 20px;
       font-weight: bold;
-}     
+}
 
 .ExtractFullContent_right_panel {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding-bottom: 15px;
-      border-radius: 10px;
       margin: 10px;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      height: 100%;
-
-
-      
 }
 
- 
+
 
 
 
 .ExtractFullContent_upload_interface {
       display: flex;
-       
+
       margin-left: 5%;
       margin-right: 5%;
- 
+
       /* height: 40%; */
-       
-      
+
+
 }
 
 .ExtractFullContent_api_response {
@@ -65,6 +60,6 @@
       margin-left: 5%;
       margin-right: 5%;
       text-align: left;
-       
+
       word-wrap: break-word;  /* Allows long words to be broken and wrapped to the next line */
 }

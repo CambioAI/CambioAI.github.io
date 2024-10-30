@@ -1,9 +1,9 @@
 import React from 'react';
 import './KeyValueApiResponseTable.css';
 const KeyValueApiResponseTable = ({ data }: any) => {
-      const datatoShow  =  data.output;
+      const datatoShow  =  data.output_dict;
       console.log(datatoShow);
-      
+
     if (!datatoShow || datatoShow.length === 0) return <p>No data available</p>;
 
     const firstEntry = datatoShow[0]; // Assuming you only need to show the first object from the array

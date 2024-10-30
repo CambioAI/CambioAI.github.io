@@ -16,8 +16,8 @@ import axios from 'axios';
 
 const DocumentParsing: React.FC = () => {
   // Assuming the URL of your default PDF
-  const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";  
-  
+  const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";
+
   const [file, setFile] = useState<File | null>(null);
   const [FullContent_apiResponse, setFullContent_apiResponse] = useState(null);
   const [KeyValue_apiResponse, setKeyValue_apiResponse] = useState(null);
@@ -32,17 +32,17 @@ const DocumentParsing: React.FC = () => {
     arrowPosition :{'--top':'none', '--bottom':'none', '--left':'100% ', '--right':'none' },
     shape: {'--clip-path': ' polygon(0% 0, 0% 100%,100% 50%)'}  ,
     },
-  
-  
-  
-  
+
+
+
+
     { position: { top: '370px', left: '980px' },
    content: 'View parsed content below',
     buttonText: "Got it!",
     arrowPosition :{'--bottom':'none', '--top':'100%', '--left':'10%  ', '--right':'none' },
     shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
     },
-    
+
     { position: { top: '570px', left: '83vw' },
    content: 'You can download/copy parsed content or redo the task',
     buttonText: "Got it!",
@@ -55,16 +55,16 @@ const DocumentParsing: React.FC = () => {
     arrowPosition :{'--bottom':'none', '--top':'100%', '--left':'none  ', '--right':'none' },
     shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
     },
-  
-  
- 
+
+
+
   ];
 
   useEffect(() => {
     if (location.state) {
       const state = location.state as any;
       if (state.file) setFile(state.file);
-       
+
     }
     if (location.state && (location.state as any).isTourStarted) {
       setIsTourStarted((location.state as any).isTourStarted);
@@ -74,15 +74,16 @@ const DocumentParsing: React.FC = () => {
   const handleFileChange = (file: File) => {
       setFile(file);
   };
-   
 
 
-  const input_keys = ["name", "address", "phone", "email"]
-  const server_url_keyValues = "http://35.95.52.139:8000/extract"
-  const server_url_full = "http://35.95.52.139:8000/parse"
+
+  // const input_keys = ["name", "address", "phone", "email"]
+  const server_url_keyValues = "http://35.87.52.57:8000/extract"
+  const server_url_full = "http://35.87.52.57:8000/full_content"
+  const server_url_qa = "http://35.87.52.57:8000/qa"
   const api_key = "Cambio2024!"
   const ExtractKeyValuePostServer = async (input_keys: string[], input_descriptions: string[]) => {
-    
+
     if (input_keys.length == 0) {
       alert("You need to have at least one key");
       return;
@@ -93,7 +94,7 @@ const DocumentParsing: React.FC = () => {
     }
     let fileToUse = file;
     if (! fileToUse) {
-       
+
       try {
           const response = await fetch(defaultPdfUrl);
           const blob = await response.blob();
@@ -102,8 +103,8 @@ const DocumentParsing: React.FC = () => {
           alert('Error fetching the default file. Please try again.');
           return;
       }
-          
-      
+
+
     }
 
     // Check file size (e.g., limit to 10MB)
@@ -131,7 +132,7 @@ const DocumentParsing: React.FC = () => {
       console.log("started");
       console.log(input_keys);
       console.log(input_descriptions);
-      const response = await axios.post(server_url_keyValues, payload);
+      const response = await axios.post(server_url_keyValues, payload, { headers });
       console.log(JSON.stringify(response.data, null, 2));
       setKeyValue_apiResponse(response.data);
       // Handle successful response (e.g., update state, show success message)
@@ -148,7 +149,7 @@ const DocumentParsing: React.FC = () => {
   const ExtractFullContentPostServer = async () => {
     let fileToUse = file;
     if (! fileToUse) {
-       
+
       try {
           const response = await fetch(defaultPdfUrl);
           const blob = await response.blob();
@@ -157,8 +158,8 @@ const DocumentParsing: React.FC = () => {
           alert('Error fetching the default file. Please try again.');
           return;
       }
-          
-      
+
+
     }
 
     // Check file size (e.g., limit to 10MB)
@@ -172,10 +173,24 @@ const DocumentParsing: React.FC = () => {
       // Read and encode the file
       const fileContent = await readFileAsBase64(fileToUse);
 
+      const extract_args = {
+        vqa_figures_flag: true,
+        vqa_charts_flag: true,
+        vqa_tables_flag: true,
+        vqa_footnotes_flag: false,
+        vqa_headers_flag: true,
+        vqa_footers_flag: true,
+        vqa_page_nums_flag: true,
+        vqa_table_only_flag: false,
+        vqa_table_only_caption_flag: true
+      };
+
+      const file_type = fileToUse.name.split('.').pop();
+
       const payload = {
-        
+        extract_args: extract_args,
         file_content: fileContent,
-        file_name: fileToUse.name,
+        file_type: file_type,
       };
 
       const headers = {
@@ -197,6 +212,53 @@ const DocumentParsing: React.FC = () => {
     }
   };
 
+  const ExtractQAPostServer = async (userMessage: string): Promise<string> => {
+    let fileToUse = file;
+    const error_message = "I'm sorry, I ran into an error. Please try again.";
+    if (! fileToUse) {
+      try {
+          const response = await fetch(defaultPdfUrl);
+          const blob = await response.blob();
+          fileToUse = new File([blob], 'defaultfile.pdf', { type: blob.type });
+      } catch (error) {
+          alert('Error fetching the default file. Please try again.');
+          return error_message;
+      }
+    }
+
+    try {
+      // Read and encode the file
+      const fileContent = await readFileAsBase64(fileToUse);
+
+      const file_type = fileToUse.name.split('.').pop();
+
+      const payload = {
+        input_questions_list: [userMessage],
+        file_content: fileContent,
+        file_type: file_type,
+      };
+
+      const headers = {
+        "X-API-Key": api_key,
+        "Content-Type": "application/json"
+      };
+      console.log("started");
+      const response = await axios.post(server_url_qa, payload, { headers });
+      console.log(JSON.stringify(response.data, null, 2));
+      const answer = response.data["output_dict"][0]["answer"];
+      if (answer === "") return "I'm sorry, I don't know the answer to that question. Please try again.";
+      return answer;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      if (axios.isAxiosError(error) && error.response) {
+        return error_message;
+      } else {
+        return error_message;
+
+      }
+    }
+  };
+
   // Helper function to read file as base64
   const readFileAsBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -214,10 +276,10 @@ const DocumentParsing: React.FC = () => {
       reader.readAsDataURL(file);
     });
   };
-  
-  
+
+
   const renderPreview = () => {
-      
+
       if (file) {
             const fileUrl = URL.createObjectURL(file);
             if (file.type.startsWith('application/pdf')) {
@@ -226,17 +288,17 @@ const DocumentParsing: React.FC = () => {
             return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
             }
       }
-      if (!file && defaultPdfUrl  ) { 
+      if (!file && defaultPdfUrl  ) {
             return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '100vh' }} frameBorder="0"></iframe>;}
-          
+
       if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
 
-      
+
     };
 
 
 
-     
+
     const initialCategory = location.state?.category || 'full';
 
 
@@ -255,7 +317,11 @@ const DocumentParsing: React.FC = () => {
     // };
 
 
-
+    const handleUploadFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+            handleFileChange(event.target.files[0]);
+      }
+};
 
 
 
@@ -263,7 +329,7 @@ const DocumentParsing: React.FC = () => {
 
 
   return (
-    
+
     <div className="DocumentParsing">
       <Header   />
       <SubHeader   />
@@ -273,15 +339,18 @@ const DocumentParsing: React.FC = () => {
               <div >
                 <h2 className="DocumentParsing_left-header">File Outlook</h2>
               </div>
-              
+
               {renderPreview()}
+              <div className="DocumentParsing_upload_interface">
+                        <UploadInterface   onChange={handleUploadFileChange}  />
+                  </div>
             </div>
             <div className="DocumentParsing_right_panel">
               <div className="DocumentParsing_FULL">
                 <NoticeContainer />
               </div>
-          
-            
+
+
 
 
 
@@ -303,14 +372,14 @@ const DocumentParsing: React.FC = () => {
             </button>
           </div>
           <div className="DocumentParsing_category-content">
-          <FileProvider ExtractKeyValuePostServer={ExtractKeyValuePostServer} ExtractFullContentPostServer={ExtractFullContentPostServer}>
-       
+          <FileProvider ExtractKeyValuePostServer={ExtractKeyValuePostServer} ExtractFullContentPostServer={ExtractFullContentPostServer} ExtractQAPostServer={ExtractQAPostServer}>
+
           <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} FullContent_apiResponse={FullContent_apiResponse} />
-          <ExtractTables isActive={activeCategory === 'tables'} onFileChange={handleFileChange} />  
-          <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} KeyValue_apiResponse={KeyValue_apiResponse} />  
+          <ExtractTables isActive={activeCategory === 'tables'} onFileChange={handleFileChange} />
+          <ExtractKeyValue isActive={activeCategory === 'keyValue'} onFileChange={handleFileChange} KeyValue_apiResponse={KeyValue_apiResponse} />
             {/* {renderCategoryContent()} */}
 
-          
+
           </FileProvider>
               </div>
 
@@ -320,16 +389,16 @@ const DocumentParsing: React.FC = () => {
 
 
 
-           
-             
+
+
         </div>
       </div>
       {isTourOpen && (
             <TourComponent steps={steps} onClose={() => setIsTourOpen(false)} />
            )}
-    </LoadingProvider> 
+    </LoadingProvider>
     </div >
-    
+
   );
 };
 

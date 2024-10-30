@@ -1,20 +1,26 @@
 import React, { createContext, useContext, ReactNode, useState } from 'react';
 
-const FileContext = createContext({
-  ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => {}, 
-  ExtractFullContentPostServer: () => {}
+const FileContext = createContext<{
+  ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void;
+  ExtractFullContentPostServer: () => void;
+  ExtractQAPostServer: (userMessage: string) => Promise<string>;
+}>({
+  ExtractKeyValuePostServer: () => {},
+  ExtractFullContentPostServer: () => {},
+  ExtractQAPostServer: async () => "",
 });
- 
- 
-export const useFileContext = () => useContext(FileContext);
- 
 
-export const FileProvider: React.FC<{ 
-  children: ReactNode; 
-  ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void, 
-  ExtractFullContentPostServer: () => void 
-}> = ({ children, ExtractKeyValuePostServer, ExtractFullContentPostServer }) => (
-  <FileContext.Provider value={{ ExtractKeyValuePostServer, ExtractFullContentPostServer }}>
+
+export const useFileContext = () => useContext(FileContext);
+
+
+export const FileProvider: React.FC<{
+  children: ReactNode;
+  ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void,
+  ExtractFullContentPostServer: () => void,
+  ExtractQAPostServer: (userMessage: string) => Promise<string>,
+}> = ({ children, ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer }) => (
+  <FileContext.Provider value={{ ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer }}>
     {children}
   </FileContext.Provider>
 );
