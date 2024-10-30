@@ -47,7 +47,15 @@
   font-weight: lighter;
 }
 
-
+.ChooseCategory_left-header {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 14.52px;
+  text-align: left;
+  padding-left: 2vw;
+ 
+}
 .ChooseCategory_left_panel {
   
   width: 39%;
@@ -142,9 +150,15 @@
 }
 
 .ChooseCategory-button-description {
-  font-size: 12px;
+  font-family: Inter;
+font-size: 14px;
+font-weight: 400;
+line-height: 16.94px;
+text-align: left;
+
+  
   font-weight: 400;
-  text-align: left; /* Ensures text is centered horizontally */
+  
   padding-left: 2vw; /* Adjust left and right padding to ensure it doesn't squeeze the text too much */
   padding-right: 1vw; /* Adjust left and right padding to ensure it doesn't squeeze the text too much */
   margin-bottom: 3vh; /* Adds some space at the bottom inside the button */

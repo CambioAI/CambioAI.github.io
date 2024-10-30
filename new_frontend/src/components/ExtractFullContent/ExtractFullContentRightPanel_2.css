@@ -3,7 +3,10 @@
       flex-direction: column;
       gap: 15px;  
       color: #F24822;
-      font-size: 15px;
+      font-family: Inter;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 12.1px;
        
 
 
@@ -22,10 +25,14 @@
       /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
       background-color: #F24822;
       color: white;
-      font-size: 15px;
-      font-weight: bold;  
+   
       cursor: pointer;
       transition: background-color 0.3s ease;
+      font-family: Inter;
+font-size: 10px;
+font-weight: 700;
+line-height: 12.1px;
+ 
 }
 
 .ExtractFullContentRightPanel_2_extract_button:hover {
@@ -43,6 +50,12 @@
       height: 15px;
       margin-right: 10px;
       margin-left: 20px;
+      font-family: Inter;
+font-size: 10px;
+font-weight: 400;
+line-height: 12.1px;
+ 
+
 }
 
 .ExtractFullContentRightPanel_2_copy_icon {
@@ -50,4 +63,9 @@
       height: 15px;
       margin-right: 10px;
       margin-left: 20px;
+      font-family: Inter;
+font-size: 10px;
+font-weight: 400;
+line-height: 12.1px;
+ 
 }

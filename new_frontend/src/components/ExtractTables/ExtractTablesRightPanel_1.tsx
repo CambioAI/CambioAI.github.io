@@ -17,7 +17,7 @@ const ExtractTablesRightPanel_1: React.FC<{ onButtonClick: () => void }> = ({ on
                   </button>
             <div>
                   <li className="ExtractTablesRightPanel_1_checkbox_list">
-                        <h3>Leave-out Info</h3>
+                        <h3 className="ExtractTablesRightPanel_1_header">Leave-out Info</h3>
 
                         <label>
                               <input type="checkbox" /> Personal ID Info

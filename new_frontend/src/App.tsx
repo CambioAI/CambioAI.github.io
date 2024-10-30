@@ -30,8 +30,10 @@ const App: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
   const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
+  const [isTourDismissed, setIsTourDismissed] = useState<boolean>(false);
+
   const steps = [
-    { position: { top: '500px', left: '900px' },
+    { position: { top: '50vh', left: '60vw' },
    content: 'Let’s start with parsing a sample doc!',
     buttonText: "Got it!",
     arrowPosition :{'--top':'100%', '--bottom':'none', '--left':'10%', '--right':'none' },
@@ -117,8 +119,8 @@ const App: React.FC = () => {
           <div className="Mainpage_left_panel">
 
 
-            <div className="left-header">
-              <h2>File Outlook</h2>
+            <div  >
+               <h2 className="Mainpage_left-header"> File Outlook  </h2>
             </div>
             <div className="Mainpage_render-preview-container">  
               {renderPreview()}
@@ -154,7 +156,7 @@ const App: React.FC = () => {
 
                 <button className="Mainpage_sample-button" onClick={handleSampleClick}>
                    
-                    <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 1.png"  className="Mainpage_sample-button-image"/>
+                    <img src="/Sanbox Icon and images/Sanbox Icon and images/sample 2.png"  className="Mainpage_sample-button-image"/>
                     <div className="Mainpage_sample-button-content"> 
                       <h2 className="Mainpage_sample-button-title">Sustainability Report</ h2>
                       <p className="Mainpage_sample-button-description">Unstructured | Irregular Layout | Text 
@@ -180,12 +182,21 @@ const App: React.FC = () => {
 
 
 
-          
-            <div className="ProductTour">
+            { !isTourDismissed && (
+              <div className="ProductTour">
               <p>Take a Product Tour?</p>
               <button className="product-tour-go-button" onClick={() => { setIsTourStarted(true); setIsTourOpen(true)  }}>Start Tour</button>
-              <button className="product-tour-dismiss-button" onClick={() => setIsTourStarted(false)}>Dismiss</button>
+              <button className="product-tour-dismiss-button" onClick={() => {setIsTourStarted(false); setIsTourDismissed(true)}}>Dismiss</button>
             </div>
+            )
+
+
+
+            }
+            
+
+
+
            {isTourOpen && (
             <TourComponent steps={steps} onClose={() => setIsTourOpen(false)} />
            )}

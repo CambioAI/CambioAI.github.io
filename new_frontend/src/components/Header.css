@@ -21,18 +21,27 @@
     align-items: center;
     font-size: 26px;
     
+    
   }
   .main_header_first_half{
     color: rgb(0, 0, 0);
    
     font-style: italic;
-    font-weight: lighter;
+    
     font-size: 26px;
+    font-family: Inria Serif;
+ 
+ 
+    font-weight: 400;
+    line-height: 31.17px;
+    text-align: center;
+
      
   }
   .main_header_second_half{
+    font-family: Inter;
     color: #F24822;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 26px;  
      
   }

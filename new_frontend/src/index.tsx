@@ -22,7 +22,6 @@ root.render(
   <React.StrictMode>
     <Auth0Provider domain={domain} clientId={clientId}  
     authorizationParams={{ redirect_uri: window.location.origin }}
-     
     >
     
     
@@ -38,7 +37,8 @@ root.render(
     </Router>
 </Auth0Provider>
 
-  </React.StrictMode>
+  </React.StrictMode>,
+  
   
 );
 

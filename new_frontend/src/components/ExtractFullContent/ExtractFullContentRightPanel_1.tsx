@@ -25,7 +25,7 @@ const ExtractFullContentRightPanel_1: React.FC<{ onButtonClick: () => void }> = 
            
             <div>
                   <li className="ExtractFullContent_checkbox_list">
-                        <h3>Leave-out Info</h3>
+                        <h3 className="ExtractFullContent_header">Leave-out Info</h3>
                         <label>
                               <input type="checkbox" /> Personal ID Info
                         </label>

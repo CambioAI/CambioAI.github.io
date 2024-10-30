@@ -26,7 +26,7 @@ const DocumentParsing: React.FC = () => {
   const location = useLocation();
 
   const steps = [
-    { position: { top: '570px', left: '1030px' },
+    { position: { top: '50vh', left: '68vw' },
    content: 'Decide what to leave out',
     buttonText: "Got it!",
     arrowPosition :{'--top':'none', '--bottom':'none', '--left':'100% ', '--right':'none' },
@@ -43,13 +43,13 @@ const DocumentParsing: React.FC = () => {
     shape: {'--clip-path': 'polygon(0 0, 100% 0, 50% 100%)'}  ,
     },
     
-    { position: { top: '570px', left: '1200px' },
+    { position: { top: '570px', left: '83vw' },
    content: 'You can download/copy parsed content or redo the task',
     buttonText: "Got it!",
     arrowPosition :{'--bottom':'100%', '--top':'none', '--left':'none  ', '--right':'none' },
     shape: {'--clip-path': 'polygon(0 100%, 100% 100%, 50% 0)'}  ,
     },
-    { position: { top: '700px', left: '1200px' },
+    { position: { top: '100vh', left: '83vw' },
    content: 'Great job! Now you can upload your doc to start parsing',
     buttonText: "Finish",
     arrowPosition :{'--bottom':'none', '--top':'100%', '--left':'none  ', '--right':'none' },
@@ -270,8 +270,8 @@ const DocumentParsing: React.FC = () => {
       <LoadingProvider>
           <div className="DocumentParsing_container">
             <div className="DocumentParsing_left_panel">
-              <div className="left-header">
-                <h2>File Outlook</h2>
+              <div >
+                <h2 className="DocumentParsing_left-header">File Outlook</h2>
               </div>
               
               {renderPreview()}
@@ -288,8 +288,8 @@ const DocumentParsing: React.FC = () => {
 
 
 
-          <div className="DocumentParsing_category_header ">
-            <h2>Parse Documents</h2>
+          <div >
+            <h2 className="DocumentParsing_category_header">Parse Documents</h2>
           </div>
           <div className="DocumentParsing_category-buttons">
             <button onClick={() => setActiveCategory('full')} className={activeCategory === 'full' ? 'active' : ''}>

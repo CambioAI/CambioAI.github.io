@@ -49,6 +49,16 @@
 
 }
  
+
+.Mainpage_left-header {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 14.52px;
+  text-align: left;
+  padding-left: 2vw;
+ 
+}
 .Mainpage_right_panel {
   flex-grow: 1;
   /* display: flex; */
@@ -309,6 +319,10 @@
     min-height: 45vh;
     max-height: 45vh;
   }
+
+ 
+
+
   .Mainpage_no-file-selected {
     padding: 0px;
     width: 30vh;

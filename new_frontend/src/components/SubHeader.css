@@ -18,6 +18,9 @@
  
  
 .sub_header_text{
+    font-family: Inter;
+ 
+
     font-size: 12px;
     margin-left: 6vw;
     font-weight: normal; 
@@ -28,6 +31,7 @@
  
 }
 .sub_header_text_finished {
+    font-family: Inter;
     font-size: 12px;
     margin-left: 7vw;
     font-weight: bold; 

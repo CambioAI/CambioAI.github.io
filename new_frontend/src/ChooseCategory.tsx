@@ -8,6 +8,10 @@ import NoticeContainer from './components/NoticeContainer';
 import './ChooseCategory.css';
 import TourComponent from './components/TourComponent';
 import { useTour } from './components/TourContext';
+import PdfViewer from './components/pdfViewer';
+import ReactDOM from 'react-dom';
+
+
 
 const ChooseCategory: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +19,7 @@ const ChooseCategory: React.FC = () => {
   const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
   const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
   const steps = [
-    { position: { top: '170px', left: '200px' },
+    { position: { top: '10vh', left: '15vw' },
    content: 'The original documents will be shown here',
     buttonText: "Got it!",
     arrowPosition :{'--top':'100%', '--bottom':'none', '--left':'10%', '--right':'none' },
@@ -25,7 +29,7 @@ const ChooseCategory: React.FC = () => {
   
   
   
-    { position: { top: '950px', left: '780px' },
+    { position: { top: '78vh', left: '50vw' },
    content: 'Choose your parsing method',
     buttonText: "Got it!",
     arrowPosition :{'--bottom':'100%', '--top':'none', '--left':'10%  ', '--right':'none' },
@@ -69,13 +73,14 @@ const ChooseCategory: React.FC = () => {
       if (file) {
         const fileUrl = URL.createObjectURL(file);
       if (file.type.startsWith('application/pdf')) {
-          return <iframe src={fileUrl} style={{ width: '100%', height: '85vh' }}  ></iframe>;
+          return <PdfViewer src={fileUrl}  />;
       } else if (file.type.startsWith('image')) {
           return <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' }} />;
       }
       }
       if (!file && defaultPdfUrl) { 
-        return <iframe src={defaultPdfUrl} style={{ width: '100%', height: '85vh' }} frameBorder="0"></iframe>;}
+        return <PdfViewer src={defaultPdfUrl}  />;
+      }
       if (!file && !defaultPdfUrl) return <p className="no-file-selected">Your uploaded file will be shown here :)</p>;
       
     };
@@ -86,8 +91,8 @@ const ChooseCategory: React.FC = () => {
       <SubHeader  />
       <div className="ChooseCategory_container">
         <div className="ChooseCategory_left_panel">
-          <div className="left-header">
-            <h2>File Outlook</h2>
+          <div  >
+            <h2 className="ChooseCategory_left-header">File Outlook</h2>
           </div>
            
           {renderPreview()} 
@@ -143,4 +148,5 @@ const ChooseCategory: React.FC = () => {
   );
 };
 
+ 
 export default ChooseCategory;

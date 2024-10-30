@@ -58,3 +58,10 @@
        
 }
  
+@media (min-width: 1000px){
+       .NoticeContainer_container {
+            height: 6vh;
+            padding: 1% 2%;
+       }
+
+}

@@ -3,10 +3,25 @@
       flex-direction: column;
       gap: 15px;  
       margin-left: 30px;
-      font-size: 15px;
+      font-family: Inter;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14.52px;
+   
+
 
       
-}     
+}    
+
+
+.ExtractFullContent_header {
+      font-family: Inter;
+font-size: 10px;
+font-weight: 700;
+line-height: 12.1px;
+ 
+
+}
 .ExtractFullContent_extract_button  {     
       margin-left: 5%;
       margin-right: 5%;
