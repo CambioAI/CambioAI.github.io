@@ -21,7 +21,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Auth0Provider domain={domain} clientId={clientId}
-    authorizationParams={{ redirect_uri: window.location.origin }}
+    authorizationParams={{
+      redirect_uri: window.location.origin,
+      logout: {
+        returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL
+      }
+    }}
     >
 
 
