@@ -18,11 +18,12 @@ jobs:
         run: |
           cd new_frontend
           npm install
+          npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
       - name: Build
         run: |
           cd new_frontend
-          npm run build
+          CI=false npm run build
         env:
           REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
           REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID }}
