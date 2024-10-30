@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import './ExtractKeyValueRightPanel.css';
+import { useFileContext, useLoading } from '../FileContext';
 
 import UploadInterface from '../UploadInterface';
 
+ 
 
 // const ExtractKeyValueRightPanel: React.FC<{ onButtonClick: () => void }> = ({ onButtonClick }) => {
-const ExtractKeyValueRightPanel = () => {
+const ExtractKeyValueRightPanel = (   ) => {
       type InputPair = {
             key: string;
             optional: string;
             expanded: boolean;
       };
-
-
+        const { ExtractKeyValuePostServer } = useFileContext();
+        const { setIsLoading } = useLoading();
 
        const [inputPairs, setInputPairs] = useState<InputPair[]>([{ key: '', optional: '', expanded: false }]);
 
@@ -21,6 +23,23 @@ const ExtractKeyValueRightPanel = () => {
             setInputPairs([...inputPairs, { key: '', optional: '', expanded: false }]);
         }
     };
+    const handleExtractClick = async () => {    
+        setIsLoading(true);
+        const input_keys = inputPairs
+            .map(pair => pair.key)
+            .filter(key => key !== ''); // Filter out empty keys if needed
+        const input_descriptions = inputPairs
+            .filter(pair => pair.key !== '') // Discard entries where key is empty
+            .map(pair => pair.optional || pair.key); // Use optional or default to key
+
+        try {
+            await ExtractKeyValuePostServer(input_keys, input_descriptions);
+            // Handle success
+            } catch (error) {
+            // Handle error
+            }
+            setIsLoading(false);
+        };
 
     const toggleExpand = (index: number): void => {
         const newInputPairs = inputPairs.map((pair, i) => {
@@ -35,6 +54,7 @@ const ExtractKeyValueRightPanel = () => {
     // Function to remove an input pair
     const handleRemoveInputPair = (index: number): void => {
             const newInputPairs = inputPairs.filter((_, i) => i !== index);
+             
             setInputPairs(newInputPairs);
       };
 
@@ -43,7 +63,7 @@ const ExtractKeyValueRightPanel = () => {
       <div>
             
             {/* <button className="ExtractKeyValue_extract_button" onClick={onButtonClick}>Extract Full Content</button> */}
-            <button className="ExtractKeyValue_extract_button">Extract Key-Value</button>
+            <button className="ExtractKeyValue_extract_button" onClick={handleExtractClick}>Extract Key-Value</button>
             <h2 className="ExtractKeyValueRightPanel_header">Leave-out Info</h2>
             <li className="ExtractKeyValue_checkbox_list">
                 <label>

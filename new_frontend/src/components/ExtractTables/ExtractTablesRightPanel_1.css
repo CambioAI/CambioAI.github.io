@@ -1,0 +1,54 @@
+.ExtractTablesRightPanel_1_checkbox_list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;  
+      margin-left: 30px;
+      font-family: Inter;
+font-size: 12px;
+font-weight: 400;
+line-height: 14.52px;
+ 
+
+       
+
+      
+}     
+.ExtractTablesRightPanel_1_extract_button  {     
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 90%;
+      align-items: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0px solid rgb(162, 161, 161);
+      border-radius: 10px;
+      /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+      background-color: #F24822;
+      color: white;
+      font-family: Inter;
+font-size: 10px;
+font-weight: 700;
+line-height: 12.1px;
+ 
+
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+.ExtractTablesRightPanel_1_header{
+      font-family: Inter;
+font-size: 10px;
+font-weight: 700;
+line-height: 12.1px;
+ 
+
+}
+.ExtractTablesRightPanel_1_extract_button:hover {
+      background-color: #ff8000;
+    }
+.ExtractTablesRightPanel_1_Dwld_icon {
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+}

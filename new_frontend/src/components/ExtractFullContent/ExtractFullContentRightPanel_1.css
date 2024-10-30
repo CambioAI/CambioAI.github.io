@@ -1,23 +1,51 @@
+.ExtractFullContentRightPanel_1_container {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      box-sizing: border-box;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .ExtractFullContent_checkbox_list {
       display: flex;
       flex-direction: column;
-      gap: 15px;  
+      gap: 15px;
       margin-left: 30px;
-      font-size: 15px;
+      font-family: Inter;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14.52px;
 
-      
-}     
-.ExtractFullContent_extract_button  {     
-      margin: 20px;
-       
-      padding: 10px 20px;
-      border: 1px solid rgb(162, 161, 161);
+
+
+
+}
+
+
+.ExtractFullContent_header {
+      font-family: Inter;
+font-size: 10px;
+font-weight: 700;
+line-height: 12.1px;
+
+
+}
+.ExtractFullContent_extract_button  {
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 90%;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0px solid rgb(162, 161, 161);
       border-radius: 10px;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      background-color: orange;
+      /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+      background-color: #F24822;
       color: white;
       font-size: 15px;
-      font-weight: bold;  
+      font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s ease;
 }
@@ -25,3 +53,21 @@
 .ExtractFullContent_extract_button:hover {
       background-color: #ff8000;
     }
+
+.ExtractFullContent_Dwld_icon {
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+}
+
+
+.ExtractFullContentRightPanel_1_loading_overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 1000;
+      cursor: not-allowed;
+  }

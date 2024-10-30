@@ -1,6 +1,6 @@
 .upload-interface {
       font-family: Arial, sans-serif;
-      border: 2px dashed #ff4d4d;
+      border: 2px dashed #F76077;
       padding: 10px;
       width: 80%;
       margin: auto;
@@ -10,34 +10,50 @@
       margin-bottom: 20px;
 }
 
-.header h1 {
-      text-align: center;
-      margin-bottom: 20px;
+.UploadInterface_upload-icon {
+      width: 140px;
+      height: auto;
+      margin: auto;
 }
 
-.upload-box {
-      text-align: center;
-}
-
-.icon-container {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 20px;
-}
-
-.icon {
-      width: 50px;
-      height: 50px;
-      background-color: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 5px;
-}
-
-.icon span {
+.UploadInterface_description {
+      font-family: Helvetica Neue;
       font-size: 12px;
-      text-transform: uppercase;
+      font-weight: 400;
+      line-height: 14.32px;
+      text-align: center;
+      color: #8E8E8E;
+      
+}
+
+
+
+.UploadInterface_header  {
+      font-family: Helvetica Neue;
+      font-size: 18px;
+      font-weight: 700;
+     
+   
+      
+}
+
+ 
+ 
+
+ 
+.UploadInterface_file-description {
+      
+      font-family: Helvetica Neue;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14.32px;
+      text-align: center;
+
+      width: 180px;
+      margin: auto;
+      align-items: center;
+      
+ 
 }
 
 .upload-button {
@@ -60,4 +76,11 @@ p {
 .upload-box.dragover {
       border-color: #4CAF50; /* Green border when dragging files over */
       background-color: #f0f0f0; /* Lighter background to indicate active drag area */
+}
+
+.UploadInterface_login-message {
+      color: rgb(196, 65, 65);
+      font-size: 12px;
+      font-weight: bold;
+      width: 100%;
 }

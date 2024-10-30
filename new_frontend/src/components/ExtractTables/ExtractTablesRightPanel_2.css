@@ -1,0 +1,63 @@
+.ExtractTablesRightPanel_2_checkbox_list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;  
+      color: #F24822;
+      font-family: Inter;
+font-size: 10px;
+font-weight: 400;
+line-height: 12.1px;
+text-align: left;
+
+       
+
+
+      
+}    
+
+ 
+
+
+.ExtractTablesRightPanel_2_extract_button  {     
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 90%;
+      align-items: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0px solid rgb(162, 161, 161);
+      border-radius: 10px;
+      /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+      background-color: #F24822;
+      color: white;
+      font-family: Inter;
+font-size: 10px;
+font-weight: 700;
+line-height: 12.1px;
+ 
+ 
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+
+.ExtractTables_extract_button:hover {
+      background-color: #ff8000;
+    }
+
+
+
+.ExtractTablesRightPanel_2_redo_icon {
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+      margin-left: 20px;
+}
+
+.ExtractTablesRightPanel_2_Dwld_icon {
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+}
+

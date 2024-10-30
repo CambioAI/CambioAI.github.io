@@ -1,0 +1,25 @@
+.Pdf_Container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center the pages horizontally */
+      padding: 10px;
+      overflow-y: auto; /* Allow scrolling */
+      height: 90vh; /* Or adjust to fit your layout */
+      background-color: #f8f9fa; /* Light grey background */
+      border-top: 3px solid grey;
+     
+    }
+    
+    .Pdf_page {
+      box-sizing: border-box;
+      width: 100%; /* Set page width to 95% of its container */
+      max-width: 100%;
+      margin-bottom: 20px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for each page */
+      background-color: #fff; /* Ensure the background is white */
+    }
+    .page_number_text {
+      text-align: center;
+      padding-bottom: 20px; 
+    }
+    

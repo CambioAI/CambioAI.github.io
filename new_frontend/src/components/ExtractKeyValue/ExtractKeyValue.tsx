@@ -3,17 +3,20 @@ import React, { useState, useRef } from 'react';
 import './ExtractKeyValue.css';
 import UploadInterface from '../UploadInterface';
 import ExtractKeyValueRightPanel from './ExtractKeyValueRightPanel';
-
-
+import KeyValueApiResponseTable from '../KeyValueApiResponseTable';
+import { useLoading } from '../FileContext';
 
 
 interface ExtractKeyValueProps {
       isActive: boolean;
       onFileChange: (file: File) => void; 
+      KeyValue_apiResponse: any;
+    
+      
 }
 
 
-const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChange }) => {
+const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChange, KeyValue_apiResponse }) => {
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -23,6 +26,7 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
       const togglePanel = () => {
             setShowPanel(showPanel === 1 ? 2 : 1);
       };
+      const { isLoading } = useLoading();
 
 
       const [leftWidth, setLeftWidth] = useState(70); // Initial width in percentage
@@ -46,6 +50,7 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
             document.removeEventListener('mousemove', resize);
             document.removeEventListener('mouseup', stopResize);
             };
+       
 
 
     if (!isActive) return null;
@@ -53,8 +58,24 @@ const ExtractKeyValue: React.FC<ExtractKeyValueProps> = ({ isActive, onFileChang
     return (
          
       <div ref={containerRef} className="split-container">
-            <div className="panel" style={{ width: `${leftWidth}%` }}>
-                Left Panel
+            <div className="ExtractKeyValue_left_panel" style={{ width: `${leftWidth}%` }}>
+            {isLoading && (
+                  <div className='ExtractKeyValue_loading_container'>
+                        
+                        <div className='ExtractKeyValue_loading'>
+                              
+                              
+                        </div>
+                        <p>Extracting Key-Value pairs from the document...</p>
+                </div>
+            )}
+            {(KeyValue_apiResponse && !isLoading) && (
+                <div>
+                    
+                    <KeyValueApiResponseTable className='ExtractKeyValue_api_response' data={KeyValue_apiResponse} />
+                </div>
+            )}
+             
             </div>
             <div className="divider" onMouseDown={startResize}></div>
             <div className="ExtractKeyValue_right_panel" style={{ width: `${100 - leftWidth}%` }}>

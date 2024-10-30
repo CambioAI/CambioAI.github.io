@@ -1,23 +1,24 @@
 import React from 'react';
 import './Header.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 
+ 
 
-type HeaderProps = {
-    title: string; 
-};
-
-const Header: React.FC<HeaderProps> = ({ title }) => {
+const Header: React.FC  = ( ) => {
+    const { isAuthenticated } = useAuth0();
     return (
+        
         <header className="main_header">
-            <h1>{title}</h1>
-            {/* <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav> */}
+            <div className="main_header_content">
+                <h1 className="main_header_first_half">Any</h1>
+                <h1 className="main_header_second_half">Parser</h1>
+            </div>
+        
+            {isAuthenticated ? <LogoutButton /> : <LoginButton  />}
         </header>
+      
     );
 };
 

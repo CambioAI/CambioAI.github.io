@@ -1,6 +1,7 @@
 // UploadInterface.tsx
 
 import React, { ChangeEvent, DragEvent, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import './UploadInterface.css';
 
 interface UploadInterfaceProps {
@@ -8,7 +9,15 @@ interface UploadInterfaceProps {
 }
 
 const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
+  const { isAuthenticated } = useAuth0();
   const [dragOver, setDragOver] = useState(false);
+
+  const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+    if (!isAuthenticated) {
+      alert("You must be logged in to upload a file.");
+      e.preventDefault(); // Prevents the file dialog from opening
+    }
+  };
 
   const handleDragEnter = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -32,18 +41,38 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
     e.preventDefault();
     e.stopPropagation();
     setDragOver(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const file = e.dataTransfer.files[0];
-      const mockEvent = {
-        target: {
-          files: [file],
-          value: ''
-        },
-        preventDefault: () => {},
-        stopPropagation: () => {}
-      } as unknown as ChangeEvent<HTMLInputElement>;
-      onChange(mockEvent); // Reuse the onChange prop function with a mock event carrying the file.
+    if (!isAuthenticated) {
+      alert("Please login to upload a file");
+      return;
     }
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFileUpload(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!isAuthenticated) {
+      alert("Please login to upload a file");
+       
+      e.target.value = ''; // Reset the file input
+      return;
+    }
+    if (e.target.files && e.target.files.length > 0) {
+      handleFileUpload(e.target.files[0]);
+    }
+  };
+
+  const handleFileUpload = (file: File) => {
+     
+    const mockEvent = {
+      target: {
+        files: [file],
+        value: ''
+      },
+      preventDefault: () => {},
+      stopPropagation: () => {}
+    } as unknown as ChangeEvent<HTMLInputElement>;
+    onChange(mockEvent);
   };
 
   return (
@@ -53,19 +82,33 @@ const UploadInterface: React.FC<UploadInterfaceProps> = ({ onChange }) => {
          onDragLeave={handleDragLeave}
          onDrop={handleDrop}
     >
-      <input type="file" onChange={onChange} accept="image/jpeg, image/png, .pdf, .pptx, .ppt, .doc, .docx, .xlsx" style={{ display: 'none' }} id="file-input" />
-      <label htmlFor="file-input" className="upload-button">
-        <div className={(dragOver ? "upload-box dragover" : "upload-box")}>
-          <div className="header">
-            <h1>Upload</h1>
+      <input 
+        type="file" 
+        onChange={handleFileInputChange} 
+        accept="image/jpeg, image/png, .pdf, .pptx, .ppt, .doc, .docx, .xlsx" 
+        style={{ display: 'none' }} 
+        id="file-input" 
+        disabled={!isAuthenticated}
+      />
+      <label 
+        htmlFor="file-input" 
+          className={`upload-button ${!isAuthenticated ? 'disabled' : ''}`}
+        onClick={handleLabelClick}
+      >
+        <div className={dragOver ? "upload-box dragover" : "upload-box"}>
+          <img src='/Sanbox Icon and images/Sanbox Icon and images/Upload icons.png' className='UploadInterface_upload-icon' />
+          <h2 className='UploadInterface_description'>PDF, PNG, JPEG, JPG, PPT, and DOCX</h2>
+          <div>
+            <h1 className="UploadInterface_header">Upload</h1>
           </div>
-          <div className="icon-container">
-            <div className="icon pdf"><span>PDF</span></div>
-            <div className="icon ppt"><span>PPT</span></div>
-            <div className="icon word"><span>WORD</span></div>
-            <div className="icon image"><span>IMG</span></div>
+          <div className='UploadInterface_file-description'>
+            <p>{isAuthenticated 
+              ? "Click/Drag and drop file here or Just paste screenshot" 
+              : <div className='UploadInterface_login-message'>
+                Login to upload a file
+              </div>}
+            </p>
           </div>
-          <p>Click/Drag and drop file here or Just paste screenshot</p>
         </div>
       </label>
     </div>
