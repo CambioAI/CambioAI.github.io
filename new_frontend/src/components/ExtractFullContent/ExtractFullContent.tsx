@@ -27,7 +27,7 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
       const [markdown, setMarkdown] = useState('');
       useEffect(() => {
             if (FullContent_apiResponse) {
-                setMarkdown(FullContent_apiResponse.output_dict["markdown"][0]);
+                setMarkdown(FullContent_apiResponse);
             }
         }, [FullContent_apiResponse]);
       const [showPanel, setShowPanel] = useState(1);  // State to toggle panels
@@ -87,7 +87,12 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
             <div className="ExtractFullContent_right_panel" style={{ width: `${100 - leftWidth}%` }}>
 
                   {showPanel === 1 ? (
+                        <>
                     <ExtractFullContentRightPanel_1 onButtonClick={togglePanel} />
+                    <div className="ExtractFullContent_upload_interface">
+                        <UploadInterface   onChange={handleFileChange}  />
+                  </div>
+                        </>
                         ) : (
                               <ExtractFullContentRightPanel_2 onButtonClick={togglePanel} />
                   )}

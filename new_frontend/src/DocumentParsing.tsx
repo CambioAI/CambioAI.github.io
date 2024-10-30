@@ -19,7 +19,7 @@ const DocumentParsing: React.FC = () => {
   const defaultPdfUrl = "/sampleFiles/samplePDF.pdf";
 
   const [file, setFile] = useState<File | null>(null);
-  const [FullContent_apiResponse, setFullContent_apiResponse] = useState(null);
+  const [FullContent_apiResponse, setFullContent_apiResponse] = useState<string | null>(null);
   const [KeyValue_apiResponse, setKeyValue_apiResponse] = useState(null);
   const [isTourStarted, setIsTourStarted] = useState<boolean>(false);
   const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
@@ -76,12 +76,12 @@ const DocumentParsing: React.FC = () => {
   };
 
   const base_url = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? process.env.REACT_APP_LOCAL_SERVER_URL : process.env.REACT_APP_DEPLOYED_SERVER_URL;
-  const server_url_keyValues = `${base_url}/extract`
-  const server_url_full = `${base_url}/full_content`
+  const server_url_keyValues = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/extract` : `${base_url}/json/extract`;
+  const server_url_full = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/full_content` : `${base_url}/extract`;
   const server_url_qa = `${process.env.REACT_APP_LOCAL_SERVER_URL}/qa`
   const api_key = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? process.env.REACT_APP_LOCAL_SERVER_API_KEY : process.env.REACT_APP_DEPLOYED_SERVER_API_KEY;
-  const ExtractKeyValuePostServer = async (input_keys: string[], input_descriptions: string[]) => {
 
+  const ExtractKeyValuePostServer = async (input_keys: string[], input_descriptions: string[]) => {
     if (input_keys.length === 0) {
       alert("You need to have at least one key");
       return;
@@ -90,6 +90,12 @@ const DocumentParsing: React.FC = () => {
       alert("You need to have at least one key");
       return;
     }
+
+    if (input_keys.length !== input_descriptions.length) {
+      alert("You need to have the same number of keys and descriptions");
+      return;
+    }
+
     let fileToUse = file;
     if (! fileToUse) {
 
@@ -111,6 +117,21 @@ const DocumentParsing: React.FC = () => {
       alert(`File size exceeds the limit of ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
       return;
     }
+    const file_type = fileToUse.name.split('.').pop();
+    if (!file_type) {
+      alert("File type not supported");
+      return;
+    }
+
+
+    if (process.env.REACT_APP_DEPLOYED_STATE === "LOCAL") {
+      return ExtractKeyValuePostServerLocal(input_keys, input_descriptions, fileToUse, file_type);
+    } else {
+      return ExtractKeyValuePostServerRemote(input_keys, input_descriptions, fileToUse, file_type);
+    }
+  }
+
+  const ExtractKeyValuePostServerLocal = async (input_keys: string[], input_descriptions: string[], fileToUse: File, file_type: string) => {
 
     try {
       // Read and encode the file
@@ -144,8 +165,44 @@ const DocumentParsing: React.FC = () => {
     }
   };
 
+  const ExtractKeyValuePostServerRemote = async (input_keys: string[], input_descriptions: string[], fileToUse: File, file_type: string) => {
+    console.log("EXTRACT KEY VALUE POST SERVER REMOTE");
+    const fileContent = await readFileAsBase64(fileToUse);
+
+    const extract_instruction: {[key: string]: string} = {};
+    for (let i = 0; i < input_keys.length; i++) {
+      extract_instruction[input_keys[i]] = input_descriptions[i];
+    }
+
+    const params = {
+      file_content: fileContent,
+      file_type: file_type,
+      instruction_args: {
+        extract_instruction: extract_instruction,
+      }
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": api_key || '',
+      },
+    };
+
+    const keyValueResponse = await axios.post(server_url_keyValues, params, config);
+
+    if (keyValueResponse.status !== 200) {
+      throw new Error('Failed to extract data');
+    }
+    const keyValue = keyValueResponse.data.json[0][0];
+    console.log('Got key value', keyValue)
+
+    setKeyValue_apiResponse(null);
+  }
+
   const ExtractFullContentPostServer = async () => {
     let fileToUse = file;
+
     if (! fileToUse) {
 
       try {
@@ -156,8 +213,6 @@ const DocumentParsing: React.FC = () => {
           alert('Error fetching the default file. Please try again.');
           return;
       }
-
-
     }
 
     // Check file size (e.g., limit to 10MB)
@@ -166,7 +221,22 @@ const DocumentParsing: React.FC = () => {
       alert(`File size exceeds the limit of ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
       return;
     }
+    const file_type = fileToUse.name.split('.').pop();
 
+    if (!file_type) {
+      alert("File type not supported");
+      return;
+    }
+
+
+    if (process.env.REACT_APP_DEPLOYED_STATE === "LOCAL") {
+      return ExtractFullContentPostServerLocal(fileToUse, file_type);
+    } else {
+      return ExtractFullContentPostServerRemote(fileToUse, file_type);
+    }
+  }
+
+  const ExtractFullContentPostServerLocal = async (fileToUse: File, file_type: string) => {
     try {
       // Read and encode the file
       const fileContent = await readFileAsBase64(fileToUse);
@@ -182,9 +252,6 @@ const DocumentParsing: React.FC = () => {
         vqa_table_only_flag: false,
         vqa_table_only_caption_flag: true
       };
-
-      const file_type = fileToUse.name.split('.').pop();
-
       const payload = {
         extract_args: extract_args,
         file_content: fileContent,
@@ -198,8 +265,7 @@ const DocumentParsing: React.FC = () => {
       console.log("started");
       const response = await axios.post(server_url_full, payload, { headers });
       console.log(JSON.stringify(response.data, null, 2));
-      setFullContent_apiResponse(response.data);
-      // Handle successful response (e.g., update state, show success message)
+      setFullContent_apiResponse(response.data.output_dict["markdown"][0]);
     } catch (error) {
       console.error('Error uploading file:', error);
       if (axios.isAxiosError(error) && error.response) {
@@ -209,6 +275,34 @@ const DocumentParsing: React.FC = () => {
       }
     }
   };
+
+
+  const ExtractFullContentPostServerRemote = async (fileToUse: File, file_type: string) => {
+    console.log("EXTRACT FULL CONTENT POST SERVER REMOTE", fileToUse);
+
+    const fileContent = await readFileAsBase64(fileToUse);
+
+    const params = {
+      file_content: fileContent,
+      file_type: file_type,
+      mask_pii: false,
+    }
+
+    const config = {
+      headers: {
+        'x-api-key': api_key || '',
+      },
+    };
+
+    const extractStatusResponse = await axios.post(server_url_full, params, config);
+
+    if (extractStatusResponse.status !== 200) {
+      throw new Error('Failed to extract data');
+    }
+    const markdown = extractStatusResponse.data.markdown[0];
+
+    setFullContent_apiResponse(markdown);
+  }
 
   const ExtractQAPostServer = async (userMessage: string): Promise<string> => {
     let fileToUse = file;
@@ -315,11 +409,6 @@ const DocumentParsing: React.FC = () => {
     // };
 
 
-    const handleUploadFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files && event.target.files[0]) {
-            handleFileChange(event.target.files[0]);
-      }
-};
 
 
 
@@ -339,9 +428,6 @@ const DocumentParsing: React.FC = () => {
               </div>
 
               {renderPreview()}
-              <div className="DocumentParsing_upload_interface">
-                        <UploadInterface   onChange={handleUploadFileChange}  />
-                  </div>
             </div>
             <div className="DocumentParsing_right_panel">
               <div className="DocumentParsing_FULL">
