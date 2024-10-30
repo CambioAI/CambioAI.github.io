@@ -58,8 +58,7 @@
   "devDependencies": {
     "@types/pdfjs-dist": "^2.10.377",
     "@types/react-router-dom": "^5.3.3",
-    "@types/reactour": "^1.18.5",
-    "gh-pages": "^6.2.0"
+    "@types/reactour": "^1.18.5"
   },
   "homepage": "https://CambioAI.github.io"
 }
