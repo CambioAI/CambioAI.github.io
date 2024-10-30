@@ -79,10 +79,10 @@ const DocumentParsing: React.FC = () => {
   };
 
   const base_url = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? process.env.REACT_APP_LOCAL_SERVER_URL : process.env.REACT_APP_DEPLOYED_SERVER_URL;
-  const server_url_keyValues = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/extract` : `${base_url}/json/extract`;
-  const server_url_full = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/full_content` : `${base_url}/extract`;
-  const server_url_tables = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/full_content` : `${base_url}/table/extract`;
-  const server_url_qa = `${process.env.REACT_APP_LOCAL_SERVER_URL}/qa`
+  const server_url_keyValues = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/extract_key_value` : `${base_url}/json/extract`;
+  const server_url_full = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/parse` : `${base_url}/extract`;
+  const server_url_tables = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? `${base_url}/parse` : `${base_url}/table/extract`;
+  const server_url_qa = `${process.env.REACT_APP_LOCAL_SERVER_URL}/extract_question_answer`
   const api_key = process.env.REACT_APP_DEPLOYED_STATE === "LOCAL" ? process.env.REACT_APP_LOCAL_SERVER_API_KEY : process.env.REACT_APP_DEPLOYED_SERVER_API_KEY;
 
   const ExtractKeyValuePostServer = async (input_keys: string[], input_descriptions: string[]) => {
@@ -115,16 +115,18 @@ const DocumentParsing: React.FC = () => {
   }
 
   const ExtractKeyValuePostServerLocal = async (input_keys: string[], input_descriptions: string[], fileToUse: File, file_type: string) => {
-
+    const input_key_description_pairs = input_keys.map((key, index) => ({
+      key: key,
+      description: input_descriptions[index]
+    }));
     try {
       // Read and encode the file
       const fileContent = await readFileAsBase64(fileToUse);
 
       const payload = {
-        input_keys: input_keys,
-        input_descriptions: input_descriptions,
+        extract_input_key_description_pairs: input_key_description_pairs,
         file_content: fileContent,
-        file_type: "pdf",
+        file_type: file_type,
       };
 
       const headers = {
@@ -132,8 +134,7 @@ const DocumentParsing: React.FC = () => {
         "Content-Type": "application/json"
       };
       console.log("started");
-      console.log(input_keys);
-      console.log(input_descriptions);
+      console.log(input_key_description_pairs);
       const response = await axios.post(server_url_keyValues, payload, { headers });
       console.log(JSON.stringify(response.data, null, 2));
       setKeyValue_apiResponse(response.data.output_dict[0]);
@@ -276,7 +277,7 @@ const DocumentParsing: React.FC = () => {
     }
   }
 
-  const ExtractFullContentPostServer = async () => {
+  const ParsePostServer = async () => {
     const fileCheck = await checkFileAndFileType();
     if (!fileCheck) {
       alert("Invalid file. Please check your file and try again.");
@@ -297,13 +298,13 @@ const DocumentParsing: React.FC = () => {
     };
 
     if (process.env.REACT_APP_DEPLOYED_STATE === "LOCAL") {
-      return ExtractFullContentPostServerLocal(fileToUse, file_type, extract_args);
+      return ParsePostServerLocal(fileToUse, file_type, extract_args);
     } else {
-      return ExtractFullContentPostServerRemote(fileToUse, file_type, extract_args);
+      return ParsePostServerRemote(fileToUse, file_type, extract_args);
     }
   }
 
-  const ExtractFullContentPostServerLocal = async (fileToUse: File, file_type: string, extract_args: any) => {
+  const ParsePostServerLocal = async (fileToUse: File, file_type: string, extract_args: any) => {
     try {
       // Read and encode the file
       const fileContent = await readFileAsBase64(fileToUse);
@@ -333,7 +334,7 @@ const DocumentParsing: React.FC = () => {
   };
 
 
-  const ExtractFullContentPostServerRemote = async (fileToUse: File, file_type: string, extract_args: any) => {
+  const ParsePostServerRemote = async (fileToUse: File, file_type: string, extract_args: any) => {
     console.log("EXTRACT FULL CONTENT POST SERVER REMOTE", fileToUse);
 
     const fileContent = await readFileAsBase64(fileToUse);
@@ -541,7 +542,7 @@ const DocumentParsing: React.FC = () => {
             </button>
           </div>
           <div className="DocumentParsing_category-content">
-          <FileProvider ExtractKeyValuePostServer={ExtractKeyValuePostServer} ExtractFullContentPostServer={ExtractFullContentPostServer} ExtractQAPostServer={ExtractQAPostServer} ExtractTablesPostServer={ExtractTablesPostServer}>
+          <FileProvider ExtractKeyValuePostServer={ExtractKeyValuePostServer} ParsePostServer={ParsePostServer} ExtractQAPostServer={ExtractQAPostServer} ExtractTablesPostServer={ExtractTablesPostServer}>
 
           <ExtractFullContent isActive={activeCategory === 'full'} onFileChange={handleFileChange} FullContent_apiResponse={FullContent_apiResponse} />
           <ExtractTables isActive={activeCategory === 'tables'} onFileChange={handleFileChange} Tables_apiResponse={Tables_apiResponse} />

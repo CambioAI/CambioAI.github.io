@@ -2,12 +2,12 @@ import React, { createContext, useContext, ReactNode, useState } from 'react';
 
 const FileContext = createContext<{
   ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void;
-  ExtractFullContentPostServer: () => void;
+  ParsePostServer: () => void;
   ExtractQAPostServer: (userMessage: string) => Promise<string>;
   ExtractTablesPostServer: () => void;
 }>({
   ExtractKeyValuePostServer: () => {},
-  ExtractFullContentPostServer: () => {},
+  ParsePostServer: () => {},
   ExtractQAPostServer: async () => "",
   ExtractTablesPostServer: () => {},
 });
@@ -19,11 +19,11 @@ export const useFileContext = () => useContext(FileContext);
 export const FileProvider: React.FC<{
   children: ReactNode;
   ExtractKeyValuePostServer: (input_keys: string[], input_descriptions: string[]) => void,
-  ExtractFullContentPostServer: () => void,
+  ParsePostServer: () => void,
   ExtractQAPostServer: (userMessage: string) => Promise<string>,
   ExtractTablesPostServer: () => void,
-}> = ({ children, ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer, ExtractTablesPostServer }) => (
-  <FileContext.Provider value={{ ExtractKeyValuePostServer, ExtractFullContentPostServer, ExtractQAPostServer, ExtractTablesPostServer }}>
+}> = ({ children, ExtractKeyValuePostServer, ParsePostServer, ExtractQAPostServer, ExtractTablesPostServer }) => (
+  <FileContext.Provider value={{ ExtractKeyValuePostServer, ParsePostServer, ExtractQAPostServer, ExtractTablesPostServer }}>
     {children}
   </FileContext.Provider>
 );

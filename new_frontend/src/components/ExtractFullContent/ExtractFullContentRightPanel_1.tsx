@@ -3,13 +3,13 @@ import './ExtractFullContentRightPanel_1.css';
 import { useFileContext, useLoading } from '../FileContext';
 
 const ExtractFullContentRightPanel_1: React.FC<{ onButtonClick: () => void }> = ({ onButtonClick }) => {
-    const { ExtractFullContentPostServer } = useFileContext();
+    const { ParsePostServer } = useFileContext();
     const { isLoading,setIsLoading } = useLoading();
 
     const handleExtractClick = async () => {
         setIsLoading(true);
         try {
-            await ExtractFullContentPostServer();
+            await ParsePostServer();
             onButtonClick();
         } finally {
             setIsLoading(false);
